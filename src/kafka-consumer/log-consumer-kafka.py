@@ -5,8 +5,6 @@ from common.kafka_client import create_kafka_consumer
 from common.db.db_orm import persist_log_entries
 from common.log.log_analyzer_apache import perform_openai_analysis
 
-# Simulated AI response generator (until LangChain is integrated)
-
 def extract_log_metadata(log_line):
     """Parses a single log line to extract timestamp and message."""
     try:
