@@ -11,7 +11,7 @@ mysql:
   database: "log_analysis"
 
 log:
-  file_path: "./resources/data/logs/apache.log"
+  file_path: "./resources/data/logs/apache.txt"
 
 ai:
   enabled: true
