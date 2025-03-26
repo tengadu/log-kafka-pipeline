@@ -1,0 +1,22 @@
+kafka:
+  bootstrap_servers: "localhost:9092"
+  topic: "log-topic"
+  group_id: "log-consumer-group"
+
+mysql:
+  host: "localhost"
+  port: 3306
+  user: "python"
+  password: "python#123"
+  database: "log_analysis"
+
+log:
+  file_path: "resources/data/logs/apache.log"
+  source_name: "apache"
+
+ai:
+  enabled: true
+  openai_api_key: "your-openai-key"
+
+general:
+  environment: "dev"
