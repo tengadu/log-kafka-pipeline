@@ -1,0 +1,76 @@
+scenarios:
+  - name: microservice_latency_spike
+    category: latency
+    description: "High latency across services and APIs"
+    count: 5
+    shared_context:
+      trace_id: "{trace_id}"
+      timestamp: "{timestamp}"
+      ip: "{ip}"
+    steps:
+      - component: api-gateway
+        template: "[{timestamp}] [INFO] [trace_id={trace_id}] Request received from {ip} for /purchase"
+      - component: payment-service
+        template: "[{timestamp}] [INFO] [trace_id={trace_id}] Payment initiated for user {uid}"
+      - component: orders-db
+        template: "[{timestamp}] [WARN] [trace_id={trace_id}] Order insert delayed by {ms}ms"
+      - component: payment-service
+        template: "[{timestamp}] [ERROR] [trace_id={trace_id}] Timeout communicating with bank gateway"
+
+  - name: kafka_consumer_lag
+    category: kafka
+    description: "Consumer lag leading to skipped processing"
+    count: 3
+    shared_context:
+      timestamp: "{timestamp}"
+      ip: "{ip}"
+    steps:
+      - component: kafka-broker-1
+        template: "[{timestamp}] [INFO] Consuming topic {topic} at partition {partition}"
+      - component: consumer-service
+        template: "[{timestamp}] [WARN] Lag observed: {lag} messages in {topic}"
+      - component: consumer-service
+        template: "[{timestamp}] [ERROR] Consumer timeout - backlog too large"
+
+  - name: disk_io_error
+    category: disk
+    description: "Disk write errors and slow throughput"
+    count: 2
+    shared_context:
+      timestamp: "{timestamp}"
+    steps:
+      - component: storage-engine
+        template: "[{timestamp}] [WARN] Disk usage crossed 90% at {mount_path}"
+      - component: db-node-3
+        template: "[{timestamp}] [ERROR] Write failure at {mount_path} - retrying..."
+
+  - name: network_packet_loss
+    category: network
+    description: "Network instability in service-to-service calls"
+    count: 4
+    shared_context:
+      timestamp: "{timestamp}"
+      source_ip: "{source_ip}"
+      target_ip: "{target_ip}"
+    steps:
+      - component: service-A
+        template: "[{timestamp}] [INFO] Sending request to {target_ip}"
+      - component: network-monitor
+        template: "[{timestamp}] [WARN] High latency detected to {target_ip}"
+      - component: service-A
+        template: "[{timestamp}] [ERROR] Packet loss detected. Retries exhausted."
+
+  - name: customer_satisfaction_drop
+    category: business-insight
+    description: "AI or feedback driven negative sentiment"
+    count: 2
+    shared_context:
+      timestamp: "{timestamp}"
+      uid: "{uid}"
+    steps:
+      - component: feedback-service
+        template: "[{timestamp}] [INFO] Feedback submitted by user {uid}"
+      - component: sentiment-engine
+        template: "[{timestamp}] [WARN] Negative sentiment score: {score} for user {uid}"
+      - component: support-system
+        template: "[{timestamp}] [INFO] Triggered follow-up task for user {uid}"
