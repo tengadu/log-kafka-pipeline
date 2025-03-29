@@ -1,7 +1,7 @@
 kafka:
   bootstrap_servers: "localhost:9092"
-  topic: "log-topic"
-  group_id: "log-consumer-group"
+  topic: "ai-topic"
+  group_id: "ai-consumer-group"
 
 mysql:
   host: "localhost"
@@ -10,10 +10,21 @@ mysql:
   password: "python#123"
   database: "log_analysis"
 
+scenarios:
+  config: "./src/log-generator/config/scenario_config.yaml"
+  log_file: "./resources/data/synthetic_logs/synthetic_logs.txt"
+
+scenarios_v2:
+  config: "./src/log-generator/config/scenario_config_v2.yaml"
+  log_file: "./resources/data/synthetic_logs/synthetic_logs_v2.txt"
+
 log:
   file_path: "./resources/data/logs/apache.txt"
+  source_name: "apache"
 
 ai:
+  provider: ollama       # or openai
+  model: mistral         # or gpt-4, llama3, codellama, etc.
   enabled: true
   openai_api_key: "P1CxVPHZhfSZgBoPZJPJ9zoG2c7KwIg+7RRkjjionqT0D4Z+MKwUJ5ybJfPr+bTCu19Kyr1J99AKvFLW1sz4FRzsKs3nZ3IQS0HlT8U7wGodpU3cxvvzWH7O84hFleYoN9RTfNB4iX7rMQFp+tmuo7M0KoyxD0jRliCSIoL4BfU6/S+73zUSuDwT4VaDAsT39EQus4UcaSe7d5dLDtRYeM5cFAPAxVhXgNo0RdJeQRJ8/7/DOBYOnBp3f3GSnzCA"
 

@@ -1,3 +1,5 @@
+import logging
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from common.config_loader import load_config
@@ -9,6 +11,8 @@ DATABASE_URL = f"mysql+pymysql://{config['mysql']['user']}:{config['mysql']['pas
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
+logger = logging.getLogger("db_orm")
+
 
 # One-time init to create tables (if not yet created)
 def init_db():
@@ -69,7 +73,9 @@ def insert_log_batch(log_entries_batch):
         session.flush()  # Get auto-generated log_ids
 
         for log_entry, entry in zip(log_entry_objs, log_entries_batch):
+            logger.debug(f"🔍 Details being processed: {entry.get('details')}")
             for k, v in (entry.get("details") or {}).items():
+                logger.debug(f"🛠️ Inserting detail: field_name={k}, field_value={v}")
                 log_detail_objs.append(
                     LogEntryDetail(
                         log_id=log_entry.log_id,

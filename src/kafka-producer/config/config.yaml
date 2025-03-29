@@ -1,7 +1,7 @@
 kafka:
   bootstrap_servers: "localhost:9092"
-  topic: "log-topic"
-  group_id: "log-consumer-group"
+  topic: "ai-topic"
+  group_id: "ai-consumer-group"
 
 mysql:
   host: "localhost"

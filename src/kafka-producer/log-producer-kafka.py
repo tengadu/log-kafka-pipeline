@@ -14,7 +14,7 @@ producer = create_kafka_producer()
 
 
 def read_log_file(file_path):
-    """Generator that reads a log file line by line."""
+    """Generator that reads a ai file line by line."""
     with open(file_path, 'r') as f:
         while True:
             line = f.readline()
@@ -25,13 +25,13 @@ def read_log_file(file_path):
 
 
 def send_to_kafka(line):
-    """Send a single log line to Kafka."""
+    """Send a single ai line to Kafka."""
     message = {"log": line}
     try:
         producer.send(topic, value=message)
         logger.info(f"✅ Sent to Kafka: {message}")
     except Exception as e:
-        logger.error(f"❌ Failed to send log: {e}")
+        logger.error(f"❌ Failed to send ai: {e}")
 
 
 def run_producer():
