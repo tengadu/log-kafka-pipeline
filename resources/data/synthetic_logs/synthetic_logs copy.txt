@@ -1,0 +1,428 @@
+[2025-03-28 14:39:29] [service: payment-service] [INFO] [trace_id=a21b6fe5-1daa-4f32-8700-9b71b481a8dd] Payment initiated for user 8805
+[2025-03-28 14:39:30] [service: retry-engine] [INFO] [trace_id=ef284bee-70e0-4a53-8fe8-5d3ab1992660] Retrying transaction for order 264433 (Attempt 2)
+[2025-03-28 14:39:31] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:39:32] [service: api-gateway] [INFO] [trace_id=0629e8ab-17d1-46b4-8207-6c7f22c6afb6] Request received from 126.224.180.234 for /purchase
+[2025-03-28 14:39:33] [service: user-service] [INFO] [trace_id=da6af590-9553-415e-a578-3130fb8403b2] Retrieved user profile successfully
+[2025-03-28 14:39:34] [service: retry-engine] [INFO] [trace_id=37643672-00eb-4581-9a7f-e6f7d3b4ed6f] Retrying transaction for order 953663 (Attempt 2)
+[2025-03-28 14:39:35] [service: kafka] [INFO] Consuming topic topic-2 at partition 2
+[2025-03-28 14:39:36] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:39:37] [service: api-gateway] [INFO] [trace_id=698b300c-a9bd-4323-b259-54624e500eae] Request forwarded to /purchase
+[2025-03-28 14:39:38] [service: auth-service] [INFO] Session check for user 1400
+[2025-03-28 14:39:39] [service: auth-service] [INFO] Session check for user 7146
+[2025-03-28 14:39:40] [service: orders-db] [INFO] [trace_id=f473f0da-db73-47cf-a8a2-ad15df6c468e] Preparing to insert order.
+[2025-03-28 14:39:41] [service: auth-service] [INFO] Session check for user 6818
+[2025-03-28 14:39:42] [service: retry-engine] [INFO] [trace_id=b72c54f2-f5ba-42e1-8726-5914b4d642a1] Retrying transaction for order 487177 (Attempt 2)
+[2025-03-28 14:39:43] [service: service-A] [INFO] Sending request to 109.33.212.129
+[2025-03-28 14:39:44] [service: kafka] [INFO] Consuming topic topic-1 at partition 0
+[2025-03-28 14:39:45] [service: support-system] [INFO] Triggered follow-up task for user 2263
+[2025-03-28 14:39:46] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:39:47] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:39:48] [service: kafka] [INFO] Consuming topic topic-4 at partition 1
+[2025-03-28 14:39:49] [service: retry-engine] [INFO] [trace_id=28fcd4d3-66c5-4292-b50d-6086bb147e95] Retrying transaction for order 162577 (Attempt 2)
+[2025-03-28 14:39:50] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:39:51] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:39:52] [service: auth-service] [INFO] Session check for user 4685
+[2025-03-28 14:39:53] [service: kafka] [INFO] Consuming topic topic-4 at partition 1
+[2025-03-28 14:39:54] [service: cart-service] [INFO] [trace_id=8d64fad3-10a7-4ff2-b21c-0a060db75dce] Processing cart for user 6935
+[2025-03-28 14:39:55] [service: api-gateway] [INFO] [trace_id=8bfebe5c-1d27-4101-963e-201f70be90e6] Auth request received from 159.51.124.43
+[2025-03-28 14:39:56] [service: user-service] [INFO] [trace_id=4283b018-6991-422e-b652-00b9256bafd0] Retrieved user profile successfully
+[2025-03-28 14:39:57] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:39:58] [service: cart-service] [INFO] [trace_id=4f81687e-98da-4060-851b-408259a30b55] Processing cart for user 1488
+[2025-03-28 14:39:59] [service: auth-service] [INFO] Session check for user 1422
+[2025-03-28 14:40:00] [service: notification-service] [INFO] Attempting to publish message to topic topic-4
+[2025-03-28 14:40:01] [service: notification-service] [INFO] Attempting to publish message to topic topic-4
+[2025-03-28 14:40:02] [service: service-A] [INFO] Sending request to 7.131.146.197
+[2025-03-28 14:40:03] [service: cart-service] [INFO] [trace_id=a3d41062-a81f-4000-8349-a2efa4a76fb5] Processing cart for user 2427
+[2025-03-28 14:40:04] [service: payment-service] [INFO] [trace_id=ada3a88a-5887-4cff-aafd-e8bf463fda11] Payment initiated for user 2829
+[2025-03-28 14:40:05] [service: service-A] [INFO] Sending request to 106.3.56.77
+[2025-03-28 14:40:06] [service: fulfilment-service] [INFO] [trace_id=f5c9828d-c860-4a27-9f69-02348c99c933] Received new order for fulfilment.
+[2025-03-28 14:40:07] [service: cart-service] [INFO] [trace_id=7f40dd8f-09b2-416a-8735-98f3ae36fafc] Processing cart for user 5370
+[2025-03-28 14:40:08] [service: auth-service] [INFO] Session check for user 1415
+[2025-03-28 14:40:09] [service: service-A] [INFO] Sending request to 253.202.3.118
+[2025-03-28 14:40:10] [service: feedback-service] [INFO] Feedback submitted by user 4929
+[2025-03-28 14:40:11] [service: kafka] [INFO] Consuming topic topic-5 at partition 1
+[2025-03-28 14:40:12] [service: service-A] [INFO] Sending request to 157.160.67.3
+[2025-03-28 14:40:13] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:40:14] [service: checkout-service] [INFO] [trace_id=4da8bb14-bf59-4584-83db-6ca6a155c8f6] Initiating checkout for order 808321
+[2025-03-28 14:40:15] [service: api-gateway] [INFO] [trace_id=4e0c926b-6d07-459c-a731-4206b4a161c0] Request forwarded to /purchase
+[2025-03-28 14:40:16] [service: notification-service] [INFO] Attempting to publish message to topic topic-4
+[2025-03-28 14:40:17] [service: support-system] [INFO] Triggered follow-up task for user 6876
+[2025-03-28 14:40:18] [service: api-gateway] [INFO] [trace_id=b97c27d9-e1dc-44c3-9659-a061b8834a76] Request forwarded to /purchase
+[2025-03-28 14:40:18] [service: checkout-service] [INFO] [trace_id=23d89c3e-3ef1-45cd-b336-ea40f29c8f9c] Initiating checkout for order 445947
+[2025-03-28 14:40:18] [service: orders-db] [ERROR] [trace_id=23d89c3e-3ef1-45cd-b336-ea40f29c8f9c] Transaction write failed due to deadlock
+[2025-03-28 14:40:18] [service: retry-engine] [INFO] [trace_id=23d89c3e-3ef1-45cd-b336-ea40f29c8f9c] Retrying transaction for order 445947 (Attempt 2)
+[2025-03-28 14:40:18] [service: orders-db] [INFO] [trace_id=23d89c3e-3ef1-45cd-b336-ea40f29c8f9c] Transaction committed successfully
+[2025-03-28 14:40:20] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:40:21] [service: checkout-service] [INFO] [trace_id=e69cf2ce-915e-4d66-ba47-44861f14b3fb] Initiating checkout for order 209158
+[2025-03-28 14:40:22] [service: api-gateway] [INFO] [trace_id=ccf661ae-f4e6-43bd-a898-398b3d914af8] Request forwarded to /purchase
+[2025-03-28 14:40:23] [service: api-gateway] [INFO] [trace_id=c090edd3-ecce-4f36-a737-54d14ffd0813] Retrying /purchase after delay of 1791ms
+[2025-03-28 14:40:24] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:40:25] [service: payment-service] [INFO] [trace_id=fdd9e0bd-45a5-460d-8717-59ac2884f8f1] Payment initiated for user 5579
+[2025-03-28 14:40:26] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:40:27] [service: cart-service] [INFO] [trace_id=11457ea2-603b-4fc6-9039-5f562c8b7de4] Processing cart for user 2975
+[2025-03-28 14:40:28] [service: kafka] [INFO] Consuming topic topic-5 at partition 1
+[2025-03-28 14:40:29] [service: kafka] [INFO] Consuming topic topic-2 at partition 3
+[2025-03-28 14:40:30] [service: kafka] [INFO] Consuming topic topic-1 at partition 1
+[2025-03-28 14:40:31] [service: auth-service] [INFO] Session check for user 7875
+[2025-03-28 14:40:32] [service: payment-service] [INFO] [trace_id=79b9fb3f-82db-4f6c-bafa-80629b71670b] Payment initiated for user 7533
+[2025-03-28 14:40:33] [service: service-A] [INFO] Sending request to 183.234.46.165
+[2025-03-28 14:40:34] [service: cart-service] [INFO] [trace_id=d5d2fe67-b9f4-440c-a8c4-74c280d56e8e] Processing cart for user 5398
+[2025-03-28 14:40:35] [service: api-gateway] [INFO] [trace_id=808f26e9-3e63-4bdf-a5ca-13001029fece] Request received from 15.92.148.26 for /purchase
+[2025-03-28 14:40:36] [service: service-A] [INFO] Sending request to 179.45.10.34
+[2025-03-28 14:40:37] [service: auth-service] [INFO] Session check for user 7242
+[2025-03-28 14:40:38] [service: payment-service] [INFO] [trace_id=942e623b-519f-451e-9203-22d9d3cbc107] Payment initiated for user 9531
+[2025-03-28 14:40:39] [service: cart-service] [INFO] [trace_id=2095ce6f-d134-40da-9dbe-6804eaa4f9d0] Processing cart for user 3695
+[2025-03-28 14:40:40] [service: api-gateway] [INFO] [trace_id=3c0c5911-063e-4549-9a25-ea2e44238184] Request received from 170.125.21.192 for /purchase
+[2025-03-28 14:40:41] [service: cart-service] [INFO] [trace_id=f5b5ba87-7486-499a-b324-7ca7df8d570c] Processing cart for user 4305
+[2025-03-28 14:40:42] [service: service-A] [INFO] Sending request to 119.169.249.246
+[2025-03-28 14:40:43] [service: api-gateway] [INFO] [trace_id=40b6c473-be9c-4c1f-a503-5b78f3a4f6b7] Request forwarded to /purchase
+[2025-03-28 14:40:43] [service: notification-service] [INFO] Attempting to publish message to topic topic-2
+[2025-03-28 14:40:43] [service: kafka-broker-3] [WARN] Publish delay > 1s observed for topic topic-2
+[2025-03-28 14:40:43] [service: kafka-broker-3] [ERROR] Failed to publish message to topic topic-2 after 3 attempts
+[2025-03-28 14:40:44] [service: api-gateway] [INFO] [trace_id=7303b2c0-7dd4-4bd5-a9ba-3cccab2e78d1] Request received from 207.4.193.113 for /purchase
+[2025-03-28 14:40:45] [service: kafka] [INFO] Consuming topic topic-1 at partition 3
+[2025-03-28 14:40:46] [service: api-gateway] [INFO] [trace_id=acb357e1-e481-437c-9106-9d60c98109a0] Retrying /purchase after delay of 3080ms
+[2025-03-28 14:40:47] [service: payment-service] [INFO] [trace_id=98deb6bf-296e-40be-8055-62db0735e971] Payment initiated for user 2841
+[2025-03-28 14:40:48] [service: api-gateway] [INFO] [trace_id=01f20839-69d9-4ea5-9f24-78cfd34baca8] Retrying /purchase after delay of 3837ms
+[2025-03-28 14:40:49] [service: cart-service] [INFO] [trace_id=db08644c-0462-4e64-a76e-2dd0ad49676d] Processing cart for user 9613
+[2025-03-28 14:40:50] [service: kafka] [INFO] Consuming topic topic-3 at partition 2
+[2025-03-28 14:40:51] [service: fulfilment-service] [INFO] [trace_id=69abfff3-2552-4591-a184-ad97be43cdaa] Received new order for fulfilment.
+[2025-03-28 14:40:52] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:40:53] [service: orders-db] [INFO] [trace_id=668d1b91-b1c1-4ec4-90a9-c5ff46fc1ee3] Preparing to insert order.
+[2025-03-28 14:40:54] [service: service-A] [INFO] Sending request to 48.193.251.147
+[2025-03-28 14:40:55] [service: api-gateway] [INFO] [trace_id=22bc9260-ab79-47e5-badf-634a01daec26] Auth request received from 71.84.67.37
+[2025-03-28 14:40:56] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:40:57] [service: payment-service] [INFO] [trace_id=133af3f5-cc42-46a4-a68c-f54907fdd6b9] Payment initiated for user 6921
+[2025-03-28 14:40:58] [service: api-gateway] [INFO] [trace_id=1414fa9b-e0fd-41af-876f-434df815a5bc] Auth request received from 130.165.221.113
+[2025-03-28 14:40:59] [service: api-gateway] [INFO] [trace_id=9a0687ca-c463-4a40-8dd4-1a982f03d151] Retrying /purchase after delay of 4294ms
+[2025-03-28 14:41:00] [service: feedback-service] [INFO] Feedback submitted by user 8776
+[2025-03-28 14:41:01] [service: cart-service] [INFO] [trace_id=15c98c24-cabb-4369-b0b6-9b398a5bb827] Processing cart for user 4834
+[2025-03-28 14:41:02] [service: user-service] [INFO] [trace_id=b207749f-f3d6-4123-8194-f8031a4a6837] Retrieved user profile successfully
+[2025-03-28 14:41:03] [service: orders-db] [INFO] [trace_id=fcd9b917-2f25-4428-867a-0a2c303f6218] Transaction committed successfully
+[2025-03-28 14:41:04] [service: service-A] [INFO] Sending request to 158.231.67.117
+[2025-03-28 14:41:05] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:41:06] [service: cart-service] [INFO] [trace_id=472b4fb8-3a84-450f-9b61-c7093c418b46] Processing cart for user 7507
+[2025-03-28 14:41:07] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:41:08] [service: auth-service] [INFO] Session check for user 7272
+[2025-03-28 14:41:09] [service: retry-engine] [INFO] [trace_id=64f58402-c35f-4449-9d4a-4a97cb73ef56] Retrying transaction for order 218424 (Attempt 2)
+[2025-03-28 14:41:10] [service: service-A] [INFO] Sending request to 161.71.121.206
+[2025-03-28 14:41:11] [service: auth-service] [INFO] Session check for user 5445
+[2025-03-28 14:41:12] [service: support-system] [INFO] Triggered follow-up task for user 4122
+[2025-03-28 14:41:13] [service: auth-service] [INFO] Session check for user 4917
+[2025-03-28 14:41:13] [service: user-service] [WARN] [trace_id=c969c969-c41f-4ea0-a73f-b2a47b48539d] Circuit breaker OPEN - rejecting all requests
+[2025-03-28 14:41:13] [service: api-gateway] [ERROR] [trace_id=c969c969-c41f-4ea0-a73f-b2a47b48539d] HTTP 503 Service Unavailable from user-service
+[2025-03-28 14:41:15] [service: payment-service] [INFO] [trace_id=4b7414bb-910f-4807-8123-08dcd0deed22] Payment initiated for user 2104
+[2025-03-28 14:41:16] [service: notification-service] [INFO] Attempting to publish message to topic topic-2
+[2025-03-28 14:41:17] [service: auth-service] [INFO] Session check for user 9473
+[2025-03-28 14:41:18] [service: checkout-service] [INFO] [trace_id=0211576b-f92e-423c-8136-c062de2ad45f] Initiating checkout for order 921651
+[2025-03-28 14:41:19] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:41:20] [service: support-system] [INFO] Triggered follow-up task for user 5300
+[2025-03-28 14:41:21] [service: api-gateway] [INFO] [trace_id=3cbeaabb-117f-4697-9237-7667bb16ebe6] Retrying /purchase after delay of 735ms
+[2025-03-28 14:41:22] [service: feedback-service] [INFO] Feedback submitted by user 6620
+[2025-03-28 14:41:23] [service: auth-service] [INFO] Session check for user 6945
+[2025-03-28 14:41:24] [service: retry-engine] [INFO] [trace_id=aff0b2c8-1f57-4a6f-a272-f06729a3a862] Retrying transaction for order 890831 (Attempt 2)
+[2025-03-28 14:41:25] [service: cart-service] [INFO] [trace_id=911fb92e-d3df-423a-9358-201fa06c254e] Processing cart for user 2350
+[2025-03-28 14:41:26] [service: payment-service] [INFO] [trace_id=7b809517-9214-4226-b285-cc1083101dd1] Payment initiated for user 1819
+[2025-03-28 14:41:27] [service: auth-service] [INFO] Session check for user 5443
+[2025-03-28 14:41:28] [service: user-service] [INFO] [trace_id=8e2aa654-902b-4397-973f-3e6714eb5d87] Retrieved user profile successfully
+[2025-03-28 14:41:29] [service: cart-service] [INFO] [trace_id=40a12cec-78f4-4a2b-b909-5df2fd79bec3] Processing cart for user 9913
+[2025-03-28 14:41:30] [service: service-A] [INFO] Sending request to 103.18.49.116
+[2025-03-28 14:41:31] [service: payment-service] [INFO] [trace_id=175908cb-1cfe-441c-a41c-71e503a92a30] Payment initiated for user 5074
+[2025-03-28 14:41:32] [service: retry-engine] [INFO] [trace_id=41e3a657-e1c2-4e60-be4c-3c51009f20a7] Retrying transaction for order 637889 (Attempt 2)
+[2025-03-28 14:41:33] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:41:34] [service: service-A] [INFO] Sending request to 9.40.40.120
+[2025-03-28 14:41:34] [service: api-gateway] [INFO] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] Request received from 249.71.56.200 for /purchase
+[2025-03-28 14:41:34] [service: payment-service] [INFO] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] Payment initiated for user 1430
+[2025-03-28 14:41:34] [service: orders-db] [WARN] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] Order insert delayed by 2539ms
+[2025-03-28 14:41:34] [service: payment-service] [ERROR] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] Timeout communicating with bank gateway
+[2025-03-28 14:41:34] [service: api-gateway] [ERROR] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] HTTP 502 Bad Gateway while processing /purchase
+[2025-03-28 14:41:34] [service: transaction-engine] [ERROR] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] Transaction rollback initiated due to service failure
+[2025-03-28 14:41:34] [service: circuit-breaker] [WARN] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] Circuit breaker tripped for payment-service
+[2025-03-28 14:41:34] [service: api-gateway] [INFO] [trace_id=3d95383d-f5d1-49c8-a007-360742165260] Retrying /purchase after delay of 2539ms
+[2025-03-28 14:41:35] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:41:36] [service: service-A] [INFO] Sending request to 71.57.148.207
+[2025-03-28 14:41:37] [service: service-A] [INFO] Sending request to 111.158.59.69
+[2025-03-28 14:41:38] [service: feedback-service] [INFO] Feedback submitted by user 2817
+[2025-03-28 14:41:39] [service: support-system] [INFO] Triggered follow-up task for user 9400
+[2025-03-28 14:41:40] [service: cart-service] [INFO] [trace_id=fe315f2a-0064-4133-ad38-a48af0b84212] Processing cart for user 6014
+[2025-03-28 14:41:41] [service: cart-service] [INFO] [trace_id=0e20d408-5387-471b-bbb5-092017720690] Processing cart for user 2445
+[2025-03-28 14:41:42] [service: fulfilment-service] [INFO] [trace_id=1852e169-026e-4e72-9e06-8c6c19d77741] Received new order for fulfilment.
+[2025-03-28 14:41:43] [service: retry-engine] [INFO] [trace_id=2704d4cc-c8d6-428f-b2ff-8edc9ee8170c] Retrying transaction for order 709811 (Attempt 2)
+[2025-03-28 14:41:44] [service: kafka] [INFO] Consuming topic topic-5 at partition 0
+[2025-03-28 14:41:45] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:41:46] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:41:47] [service: cart-service] [INFO] [trace_id=528a4cb6-2bc0-43e2-9787-34f2ef165535] Processing cart for user 3776
+[2025-03-28 14:41:48] [service: feedback-service] [INFO] Feedback submitted by user 8422
+[2025-03-28 14:41:49] [service: kafka] [INFO] Consuming topic topic-1 at partition 1
+[2025-03-28 14:41:50] [service: api-gateway] [INFO] [trace_id=24697d11-55c9-4781-861b-0acba62fb03a] Retrying /purchase after delay of 2638ms
+[2025-03-28 14:41:51] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:41:52] [service: cart-service] [INFO] [trace_id=fdc385b7-65fd-41aa-ab51-69acd9a0b900] Processing cart for user 9953
+[2025-03-28 14:41:54] [service: kafka] [INFO] Consuming topic topic-5 at partition 3
+[2025-03-28 14:41:54] [service: auth-service] [INFO] Session check for user 4698
+[2025-03-28 14:41:54] [service: auth-service] [WARN] Token expired for user 4698
+[2025-03-28 14:41:54] [service: api-gateway] [ERROR] HTTP 401 Unauthorized - session expired
+[2025-03-28 14:41:55] [service: feedback-service] [INFO] Feedback submitted by user 5057
+[2025-03-28 14:41:56] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:41:57] [service: api-gateway] [INFO] [trace_id=a1d862c7-bd9f-45e4-a13f-2e91806c0cbc] Retrying /purchase after delay of 3736ms
+[2025-03-28 14:41:58] [service: cart-service] [INFO] [trace_id=aeabc17f-dac8-453b-8027-d1f4416e0a5c] Processing cart for user 6556
+[2025-03-28 14:41:59] [service: support-system] [INFO] Triggered follow-up task for user 2782
+[2025-03-28 14:42:00] [service: api-gateway] [INFO] [trace_id=ea3863a6-5b5a-4098-aa6d-ea7df46fd05c] Request received from 105.29.241.29 for /purchase
+[2025-03-28 14:42:01] [service: auth-service] [INFO] Session check for user 4403
+[2025-03-28 14:42:02] [service: api-gateway] [INFO] [trace_id=3323a281-0972-4ef5-b9ba-e62b02034a51] Auth request received from 237.144.189.214
+[2025-03-28 14:42:03] [service: payment-service] [INFO] [trace_id=f9614ae0-793c-4d46-a94f-82dd5833f873] Payment initiated for user 2657
+[2025-03-28 14:42:04] [service: service-A] [INFO] Sending request to 108.174.88.199
+[2025-03-28 14:42:05] [service: service-A] [INFO] Sending request to 23.17.85.45
+[2025-03-28 14:42:06] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:42:07] [service: kafka] [INFO] Consuming topic topic-3 at partition 0
+[2025-03-28 14:42:08] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:42:09] [service: api-gateway] [INFO] [trace_id=43445b5a-de9c-4133-b9b2-a532711e0df1] Request received from 247.24.213.100 for /purchase
+[2025-03-28 14:42:10] [service: kafka] [INFO] Consuming topic topic-3 at partition 0
+[2025-03-28 14:42:11] [service: feedback-service] [INFO] Feedback submitted by user 2201
+[2025-03-28 14:42:12] [service: auth-service] [INFO] Session check for user 3880
+[2025-03-28 14:42:12] [service: storage-engine] [WARN] Disk usage crossed 90% at /mnt/disk2
+[2025-03-28 14:42:12] [service: db-node-3] [ERROR] Write failure at /mnt/disk2 - retrying...
+[2025-03-28 14:42:13] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:42:14] [service: service-A] [INFO] Sending request to 64.72.224.133
+[2025-03-28 14:42:15] [service: service-A] [INFO] Sending request to 121.222.171.60
+[2025-03-28 14:42:16] [service: kafka] [INFO] Consuming topic topic-5 at partition 3
+[2025-03-28 14:42:17] [service: service-A] [INFO] Sending request to 182.19.30.88
+[2025-03-28 14:42:18] [service: cart-service] [INFO] [trace_id=25c7d512-34c1-4394-bbb6-5fd05190d94b] Processing cart for user 7422
+[2025-03-28 14:42:19] [service: payment-service] [INFO] [trace_id=14ce95bd-b9f2-4fb8-ba46-797f5caa82bd] Payment initiated for user 5613
+[2025-03-28 14:42:20] [service: auth-service] [INFO] Session check for user 7524
+[2025-03-28 14:42:21] [service: auth-service] [INFO] Session check for user 4943
+[2025-03-28 14:42:22] [service: api-gateway] [INFO] [trace_id=de360712-7e53-4aae-a1d2-9b427fba3bdd] Request received from 72.12.167.101 for /purchase
+[2025-03-28 14:42:23] [service: api-gateway] [INFO] [trace_id=6d11acca-34c1-40fd-9993-bafa093b968f] Auth request received from 14.162.171.117
+[2025-03-28 14:42:24] [service: service-A] [INFO] Sending request to 147.209.34.221
+[2025-03-28 14:42:25] [service: auth-service] [INFO] Session check for user 4692
+[2025-03-28 14:42:26] [service: cart-service] [INFO] [trace_id=016b9e10-59ab-4267-bc00-652468685d3f] Processing cart for user 1086
+[2025-03-28 14:42:27] [service: kafka] [INFO] Consuming topic topic-5 at partition 3
+[2025-03-28 14:42:28] [service: kafka] [INFO] Consuming topic topic-3 at partition 1
+[2025-03-28 14:42:29] [service: service-A] [INFO] Sending request to 61.93.157.16
+[2025-03-28 14:42:30] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:42:31] [service: notification-service] [INFO] Attempting to publish message to topic topic-1
+[2025-03-28 14:42:32] [service: user-service] [INFO] [trace_id=9b0c3913-f780-4c8f-b704-a96393917623] Retrieved user profile successfully
+[2025-03-28 14:42:32] [service: service-A] [INFO] Sending request to 114.255.207.84
+[2025-03-28 14:42:32] [service: network-monitor] [WARN] High latency detected to 114.255.207.84
+[2025-03-28 14:42:32] [service: service-A] [ERROR] Packet loss detected. Retries exhausted.
+[2025-03-28 14:42:33] [service: cart-service] [INFO] [trace_id=0eadb609-9eff-48bf-97af-77aa47837826] Processing cart for user 7849
+[2025-03-28 14:42:34] [service: support-system] [INFO] Triggered follow-up task for user 3600
+[2025-03-28 14:42:36] [service: cart-service] [INFO] [trace_id=12dd0c95-d55d-43e1-b4fd-5d1796202a75] Processing cart for user 5783
+[2025-03-28 14:42:37] [service: support-system] [INFO] Triggered follow-up task for user 4274
+[2025-03-28 14:42:38] [service: notification-service] [INFO] Attempting to publish message to topic topic-1
+[2025-03-28 14:42:39] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:42:40] [service: auth-service] [INFO] Session check for user 2913
+[2025-03-28 14:42:41] [service: kafka] [INFO] Consuming topic topic-4 at partition 0
+[2025-03-28 14:42:42] [service: kafka] [INFO] Consuming topic topic-5 at partition 2
+[2025-03-28 14:42:43] [service: notification-service] [INFO] Attempting to publish message to topic topic-1
+[2025-03-28 14:42:44] [service: feedback-service] [INFO] Feedback submitted by user 4106
+[2025-03-28 14:42:45] [service: cart-service] [INFO] [trace_id=56f53b7f-457c-47b3-84f7-64e7357eccc7] Processing cart for user 1505
+[2025-03-28 14:42:46] [service: service-A] [INFO] Sending request to 36.245.63.136
+[2025-03-28 14:42:47] [service: feedback-service] [INFO] Feedback submitted by user 3299
+[2025-03-28 14:42:48] [service: support-system] [INFO] Triggered follow-up task for user 6764
+[2025-03-28 14:42:49] [service: service-A] [INFO] Sending request to 226.221.115.223
+[2025-03-28 14:42:50] [service: service-A] [INFO] Sending request to 36.134.147.76
+[2025-03-28 14:42:51] [service: cart-service] [INFO] [trace_id=14554710-e79f-4395-b802-47e7eeb59181] Processing cart for user 2549
+[2025-03-28 14:42:52] [service: retry-engine] [INFO] [trace_id=1065eeb4-01a1-40d8-8ce7-5bba3d5633a1] Retrying transaction for order 807848 (Attempt 2)
+[2025-03-28 14:42:53] [service: checkout-service] [INFO] [trace_id=cb7e560a-1313-4e22-b299-98b8cc62fb08] Initiating checkout for order 906943
+[2025-03-28 14:42:54] [service: cart-service] [INFO] [trace_id=d9f903a1-ceb5-435d-9eaf-ea856ceee2f1] Processing cart for user 1265
+[2025-03-28 14:42:55] [service: service-A] [INFO] Sending request to 4.132.122.179
+[2025-03-28 14:42:56] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:42:57] [service: service-A] [INFO] Sending request to 96.60.194.62
+[2025-03-28 14:42:58] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:42:58] [service: cart-service] [INFO] [trace_id=4562cb08-f729-4785-8253-0587c5c4da0c] Processing cart for user 8155
+[2025-03-28 14:42:58] [service: cart-service] [ERROR] [trace_id=4562cb08-f729-4785-8253-0587c5c4da0c] HTTP 500 Internal Server Error while applying promo code
+[2025-03-28 14:42:58] [service: api-gateway] [ERROR] [trace_id=4562cb08-f729-4785-8253-0587c5c4da0c] Received 500 response from cart-service
+[2025-03-28 14:42:59] [service: api-gateway] [INFO] [trace_id=a527f54e-ac66-43fd-9e41-00e3f53e349e] Request received from 199.143.205.193 for /purchase
+[2025-03-28 14:43:00] [service: payment-service] [INFO] [trace_id=a127ff3a-dad9-4462-99f8-53cfeb857861] Payment initiated for user 9635
+[2025-03-28 14:43:01] [service: api-gateway] [INFO] [trace_id=516d1917-05cc-449a-a813-f4068037d8e5] Request received from 192.15.119.196 for /purchase
+[2025-03-28 14:43:02] [service: kafka] [INFO] Consuming topic topic-2 at partition 2
+[2025-03-28 14:43:03] [service: user-service] [INFO] [trace_id=761ee923-79bc-4fe7-82af-8d86963c6b35] Retrieved user profile successfully
+[2025-03-28 14:43:04] [service: payment-service] [INFO] [trace_id=f3995fb4-2230-4ac6-831c-e50aaac937eb] Payment initiated for user 3178
+[2025-03-28 14:43:05] [service: kafka] [INFO] Consuming topic topic-3 at partition 1
+[2025-03-28 14:43:06] [service: kafka] [INFO] Consuming topic topic-2 at partition 0
+[2025-03-28 14:43:07] [service: auth-service] [INFO] Session check for user 1600
+[2025-03-28 14:43:08] [service: kafka] [INFO] Consuming topic topic-2 at partition 3
+[2025-03-28 14:43:09] [service: feedback-service] [INFO] Feedback submitted by user 8527
+[2025-03-28 14:43:10] [service: messaging-service] [INFO] [trace_id=de275581-c05f-4594-91fc-df8df6194524] Order details sent to fulfilment store.
+[2025-03-28 14:43:11] [service: checkout-service] [INFO] [trace_id=76499843-2ada-4c6c-a6b6-91deedb78fb8] Initiating checkout for order 762335
+[2025-03-28 14:43:12] [service: payment-service] [INFO] [trace_id=1582baa9-408f-440b-ab5c-f924dedc873a] Payment initiated for user 6677
+[2025-03-28 14:43:13] [service: kafka] [INFO] Consuming topic topic-3 at partition 0
+[2025-03-28 14:43:14] [service: payment-service] [INFO] [trace_id=9bcf9d2a-929e-47ce-937c-f8b7f864ac2f] Payment initiated for user 1117
+[2025-03-28 14:43:15] [service: kafka] [INFO] Consuming topic topic-2 at partition 3
+[2025-03-28 14:43:16] [service: payment-service] [INFO] [trace_id=5aa6b926-b4b6-4ce7-9b3f-bb08042117bf] Payment initiated for user 6850
+[2025-03-28 14:43:17] [service: orders-db] [INFO] [trace_id=05ee0212-2fce-43ee-afb5-44053ad6a166] Preparing to insert order.
+[2025-03-28 14:43:18] [service: api-gateway] [INFO] [trace_id=f991f352-e05d-42c7-b67c-94e035335e40] Request forwarded to /purchase
+[2025-03-28 14:43:19] [service: notification-service] [INFO] Attempting to publish message to topic topic-2
+[2025-03-28 14:43:20] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:43:21] [service: support-system] [INFO] Triggered follow-up task for user 4616
+[2025-03-28 14:43:22] [service: kafka] [INFO] Consuming topic topic-2 at partition 3
+[2025-03-28 14:43:23] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:43:24] [service: feedback-service] [INFO] Feedback submitted by user 4664
+[2025-03-28 14:43:25] [service: checkout-service] [INFO] [trace_id=61c3f592-2fda-4c65-b9dd-7c4fb57a42e0] Initiating checkout for order 423540
+[2025-03-28 14:43:26] [service: service-A] [INFO] Sending request to 104.106.146.66
+[2025-03-28 14:43:27] [service: support-system] [INFO] Triggered follow-up task for user 8087
+[2025-03-28 14:43:27] [service: replica-monitor] [WARN] Replica lag exceeds threshold - delay of 2091ms
+[2025-03-28 14:43:27] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:43:28] [service: api-gateway] [INFO] [trace_id=ad3755ac-9e88-4fdf-8cfd-84e3b361d97f] Retrying /purchase after delay of 3865ms
+[2025-03-28 14:43:29] [service: kafka] [INFO] Consuming topic topic-4 at partition 1
+[2025-03-28 14:43:30] [service: service-A] [INFO] Sending request to 172.140.250.247
+[2025-03-28 14:43:31] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:43:32] [service: kafka] [INFO] Consuming topic topic-1 at partition 2
+[2025-03-28 14:43:33] [service: checkout-service] [INFO] [trace_id=3dac0b25-5fb1-4e1b-bdf7-34ecc4e12a6a] Initiating checkout for order 389697
+[2025-03-28 14:43:34] [service: feedback-service] [INFO] Feedback submitted by user 9202
+[2025-03-28 14:43:35] [service: kafka] [INFO] Consuming topic topic-2 at partition 1
+[2025-03-28 14:43:36] [service: cart-service] [INFO] [trace_id=1fb80ee2-7b5f-43b6-958f-ce03a448c7ad] Processing cart for user 3214
+[2025-03-28 14:43:37] [service: cart-service] [INFO] [trace_id=c02cae81-34ed-4649-9ee0-2ee58a8a3d7c] Processing cart for user 6757
+[2025-03-28 14:43:38] [service: api-gateway] [INFO] [trace_id=becba44d-e7de-46ba-97de-52cc3ac18042] Request forwarded to /purchase
+[2025-03-28 14:43:39] [service: auth-service] [INFO] Session check for user 1209
+[2025-03-28 14:43:40] [service: fulfilment-service] [INFO] [trace_id=bd797956-11b2-451a-bd6b-633ca8b857b5] Received new order for fulfilment.
+[2025-03-28 14:43:41] [service: cart-service] [INFO] [trace_id=ca4d4621-5529-4ed9-ae41-8297e859afe5] Processing cart for user 6985
+[2025-03-28 14:43:42] [service: service-A] [INFO] Sending request to 75.224.94.144
+[2025-03-28 14:43:43] [service: cart-service] [INFO] [trace_id=c4bcdc96-fa68-47e2-a885-43442d06eead] Processing cart for user 1435
+[2025-03-28 14:43:44] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:43:45] [service: support-system] [INFO] Triggered follow-up task for user 7547
+[2025-03-28 14:43:46] [service: api-gateway] [INFO] [trace_id=81e33d7f-e285-45eb-a942-03dcd2af12c6] Retrying /purchase after delay of 1813ms
+[2025-03-28 14:43:47] [service: auth-service] [INFO] Session check for user 2060
+[2025-03-28 14:43:48] [service: feedback-service] [INFO] Feedback submitted by user 8089
+[2025-03-28 14:43:49] [service: support-system] [INFO] Triggered follow-up task for user 3464
+[2025-03-28 14:43:50] [service: orders-db] [INFO] [trace_id=4898de17-a29a-4b1c-835b-9cdfc7dcf890] Transaction committed successfully
+[2025-03-28 14:43:51] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:43:52] [service: api-gateway] [INFO] [trace_id=3750d77d-7377-4038-863c-bb18a9ac90f4] Request received from 74.159.240.61 for /purchase
+[2025-03-28 14:43:53] [service: auth-service] [INFO] Session check for user 2659
+[2025-03-28 14:43:54] [service: api-gateway] [INFO] [trace_id=0aada33f-dd12-4757-ad71-989aaa4f8c36] Request forwarded to /purchase
+[2025-03-28 14:43:55] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:43:56] [service: kafka] [INFO] Consuming topic topic-2 at partition 3
+[2025-03-28 14:43:57] [service: cart-service] [INFO] [trace_id=33098747-baea-4093-8eb1-40277507d96d] Processing cart for user 9202
+[2025-03-28 14:43:58] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:43:59] [service: auth-service] [INFO] Session check for user 8707
+[2025-03-28 14:44:00] [service: cart-service] [INFO] [trace_id=993824e7-7640-4fc2-be23-79f8ce22f513] Processing cart for user 5394
+[2025-03-28 14:44:01] [service: support-system] [INFO] Triggered follow-up task for user 6611
+[2025-03-28 14:44:02] [service: payment-service] [INFO] [trace_id=fe7b9321-2f55-4a95-9b60-4f0b0737d4bf] Payment initiated for user 6781
+[2025-03-28 14:44:03] [service: kafka] [INFO] Consuming topic topic-2 at partition 0
+[2025-03-28 14:44:04] [service: notification-service] [INFO] Attempting to publish message to topic topic-1
+[2025-03-28 14:44:05] [service: support-system] [INFO] Triggered follow-up task for user 8071
+[2025-03-28 14:44:06] [service: auth-service] [INFO] Session check for user 4166
+[2025-03-28 14:44:07] [service: kafka] [INFO] Consuming topic topic-1 at partition 3
+[2025-03-28 14:44:08] [service: auth-service] [INFO] Session check for user 5351
+[2025-03-28 14:44:09] [service: notification-service] [INFO] Attempting to publish message to topic topic-4
+[2025-03-28 14:44:10] [service: kafka] [INFO] Consuming topic topic-2 at partition 0
+[2025-03-28 14:44:11] [service: fulfilment-service] [INFO] [trace_id=20674873-41a3-4e5a-bf1a-f743d7ff18e1] Received new order for fulfilment.
+[2025-03-28 14:44:12] [service: cart-service] [INFO] [trace_id=85b1da8c-fc5c-46f2-8f18-d8fb3c51ea6a] Processing cart for user 2215
+[2025-03-28 14:44:13] [service: cart-service] [INFO] [trace_id=ff18cd51-80e3-4a30-b7d8-cb525a7cad20] Processing cart for user 6384
+[2025-03-28 14:44:14] [service: payment-service] [INFO] [trace_id=1ddd3ff1-a8f6-41bb-836d-5a78824f5902] Payment initiated for user 1684
+[2025-03-28 14:44:15] [service: feedback-service] [INFO] Feedback submitted by user 2102
+[2025-03-28 14:44:16] [service: orders-db] [INFO] [trace_id=9e71e743-8714-4985-a14e-45f6c12b66e8] Transaction committed successfully
+[2025-03-28 14:44:17] [service: messaging-service] [INFO] [trace_id=29d26fd5-8911-41ff-8a29-ca2af82aa505] Order details sent to fulfilment store.
+[2025-03-28 14:44:18] [service: retry-engine] [INFO] [trace_id=bd81d180-63c2-4b38-b4c2-085b63242dff] Retrying transaction for order 195257 (Attempt 2)
+[2025-03-28 14:44:19] [service: messaging-service] [INFO] [trace_id=01315169-62e4-4575-bf58-de3cf6d11acf] Order details sent to fulfilment store.
+[2025-03-28 14:44:20] [service: cart-service] [INFO] [trace_id=07d451aa-7700-4f98-b36f-be8dc71fabaa] Processing cart for user 8492
+[2025-03-28 14:44:21] [service: cart-service] [INFO] [trace_id=a53f3bfb-aa5c-405a-ac2c-3b2fcfc20d77] Processing cart for user 5351
+[2025-03-28 14:44:22] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:44:23] [service: kafka] [INFO] Consuming topic topic-2 at partition 1
+[2025-03-28 14:44:24] [service: cart-service] [INFO] [trace_id=aebecbf0-866f-48b0-952e-6f05c557e86b] Processing cart for user 9233
+[2025-03-28 14:44:25] [service: fulfilment-service] [INFO] [trace_id=bbf4b9bc-aa9f-4877-81ae-b615a214f204] Received new order for fulfilment.
+[2025-03-28 14:44:26] [service: kafka] [INFO] Consuming topic topic-5 at partition 3
+[2025-03-28 14:44:27] [service: kafka] [INFO] Consuming topic topic-2 at partition 2
+[2025-03-28 14:44:28] [service: payment-service] [INFO] [trace_id=ec55dc67-fcd4-4dec-8908-a164f25f1838] Payment initiated for user 8663
+[2025-03-28 14:44:29] [service: api-gateway] [INFO] [trace_id=9e7d10f0-4fea-426a-8967-2850d9242316] Retrying /purchase after delay of 3190ms
+[2025-03-28 14:44:31] [service: kafka] [INFO] Consuming topic topic-4 at partition 3
+[2025-03-28 14:44:32] [service: support-system] [INFO] Triggered follow-up task for user 1618
+[2025-03-28 14:44:33] [service: service-A] [INFO] Sending request to 189.101.110.197
+[2025-03-28 14:44:34] [service: support-system] [INFO] Triggered follow-up task for user 7866
+[2025-03-28 14:44:35] [service: feedback-service] [INFO] Feedback submitted by user 8408
+[2025-03-28 14:44:36] [service: messaging-service] [INFO] [trace_id=3cfc62e3-5a44-4ba8-b1b3-f67c0a4dfaa1] Order details sent to fulfilment store.
+[2025-03-28 14:44:37] [service: payment-service] [INFO] [trace_id=8a8d5d54-3d63-41c4-82c3-e998ac757201] Payment initiated for user 4777
+[2025-03-28 14:44:38] [service: api-gateway] [INFO] [trace_id=ac04a0f7-8ff8-4764-80c1-13f77e680c55] Retrying /purchase after delay of 3539ms
+[2025-03-28 14:44:39] [service: cart-service] [INFO] [trace_id=d87f2fac-c599-4074-b1a8-6f615605da79] Processing cart for user 2380
+[2025-03-28 14:44:40] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:44:41] [service: cart-service] [INFO] [trace_id=14fa1c3c-6e5e-4972-991e-9434dd97af7d] Processing cart for user 3144
+[2025-03-28 14:44:41] [service: feedback-service] [INFO] Feedback submitted by user 8128
+[2025-03-28 14:44:41] [service: sentiment-engine] [WARN] Negative sentiment score: 1 for user 8128
+[2025-03-28 14:44:41] [service: support-system] [INFO] Triggered follow-up task for user 8128
+[2025-03-28 14:44:42] [service: auth-service] [INFO] Session check for user 6119
+[2025-03-28 14:44:43] [service: auth-service] [INFO] Session check for user 8953
+[2025-03-28 14:44:44] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:44:45] [service: cart-service] [INFO] [trace_id=ffe943cd-7a15-4999-9f41-86f7390cf5d9] Processing cart for user 9414
+[2025-03-28 14:44:46] [service: kafka] [INFO] Consuming topic topic-5 at partition 3
+[2025-03-28 14:44:47] [service: auth-service] [INFO] Session check for user 7152
+[2025-03-28 14:44:48] [service: auth-service] [INFO] Session check for user 4136
+[2025-03-28 14:44:49] [service: auth-service] [INFO] Session check for user 3845
+[2025-03-28 14:44:50] [service: kafka] [INFO] Consuming topic topic-5 at partition 3
+[2025-03-28 14:44:51] [service: user-service] [INFO] [trace_id=8699d258-c274-40e0-8b7d-b3cc78380742] Retrieved user profile successfully
+[2025-03-28 14:44:52] [service: messaging-service] [INFO] [trace_id=2a7f34fe-df28-4b42-a251-a8868f302f78] Order details sent to fulfilment store.
+[2025-03-28 14:44:53] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:44:54] [service: notification-service] [INFO] Attempting to publish message to topic topic-4
+[2025-03-28 14:44:55] [service: service-A] [INFO] Sending request to 199.131.94.187
+[2025-03-28 14:44:56] [service: auth-service] [INFO] Session check for user 4241
+[2025-03-28 14:44:57] [service: cart-service] [INFO] [trace_id=4b8c4311-a082-42c6-8812-9664e84f85f7] Processing cart for user 8029
+[2025-03-28 14:44:58] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:44:59] [service: cart-service] [INFO] [trace_id=87ab0cd2-3c49-4631-aca9-13699f1fd1ef] Processing cart for user 2821
+[2025-03-28 14:45:00] [service: kafka] [INFO] Consuming topic topic-1 at partition 2
+[2025-03-28 14:45:01] [service: retry-engine] [INFO] [trace_id=0411ee7f-e6d0-42db-b715-f9b2ffdcd66f] Retrying transaction for order 328728 (Attempt 2)
+[2025-03-28 14:45:02] [service: retry-engine] [INFO] [trace_id=8d96888c-25c0-4c3b-b742-176d2a878dcd] Retrying transaction for order 561384 (Attempt 2)
+[2025-03-28 14:45:03] [service: cart-service] [INFO] [trace_id=2946d184-d4a5-4f57-b7e9-d22e0a38236a] Processing cart for user 6206
+[2025-03-28 14:45:04] [service: checkout-service] [INFO] [trace_id=0f5f5128-ed60-4493-af15-33a1b3aa1078] Initiating checkout for order 816852
+[2025-03-28 14:45:05] [service: auth-service] [INFO] Session check for user 7311
+[2025-03-28 14:45:06] [service: orders-db] [INFO] [trace_id=ed8e2be9-e4ed-4227-93ba-ac799e9936d9] Transaction committed successfully
+[2025-03-28 14:45:07] [service: orders-db] [INFO] [trace_id=01ad2308-cf24-449e-9c2f-fe4630023921] Preparing to insert order.
+[2025-03-28 14:45:08] [service: auth-service] [INFO] Session check for user 5615
+[2025-03-28 14:45:09] [service: auth-service] [INFO] Session check for user 6944
+[2025-03-28 14:45:10] [service: service-A] [INFO] Sending request to 191.108.185.245
+[2025-03-28 14:45:11] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:12] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:45:13] [service: feedback-service] [INFO] Feedback submitted by user 8038
+[2025-03-28 14:45:14] [service: feedback-service] [INFO] Feedback submitted by user 9086
+[2025-03-28 14:45:15] [service: payment-service] [INFO] [trace_id=dae82a16-c609-4149-ba42-ee05cb3d4a6d] Payment initiated for user 1019
+[2025-03-28 14:45:16] [service: checkout-service] [INFO] [trace_id=8a0175d7-dbbf-4387-80ae-151abdbad9cd] Initiating checkout for order 900459
+[2025-03-28 14:45:17] [service: kafka] [INFO] Consuming topic topic-5 at partition 2
+[2025-03-28 14:45:18] [service: cart-service] [INFO] [trace_id=e054ec39-5815-4ee2-89b3-a7d01b614d0d] Processing cart for user 7858
+[2025-03-28 14:45:19] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:20] [service: api-gateway] [INFO] [trace_id=0e51a9ca-8fcb-43d0-8277-2fa0c6a370ee] Request received from 154.141.110.247 for /purchase
+[2025-03-28 14:45:21] [service: payment-service] [INFO] [trace_id=0f32d969-84d9-4f1d-b3bd-b815c0b88742] Payment initiated for user 7964
+[2025-03-28 14:45:22] [service: feedback-service] [INFO] Feedback submitted by user 7793
+[2025-03-28 14:45:23] [service: service-A] [INFO] Sending request to 41.185.59.154
+[2025-03-28 14:45:24] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:25] [service: retry-engine] [INFO] [trace_id=6e586c2e-cadd-44e6-bf42-3a6db8b5b1e0] Retrying transaction for order 652058 (Attempt 2)
+[2025-03-28 14:45:26] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:27] [service: auth-service] [INFO] Session check for user 1664
+[2025-03-28 14:45:28] [service: support-system] [INFO] Triggered follow-up task for user 6667
+[2025-03-28 14:45:29] [service: auth-service] [INFO] Session check for user 3479
+[2025-03-28 14:45:30] [service: kafka] [INFO] Consuming topic topic-5 at partition 1
+[2025-03-28 14:45:31] [service: payment-service] [INFO] [trace_id=85bbdcbb-a832-429e-8c42-3151e7a12e43] Payment initiated for user 8881
+[2025-03-28 14:45:32] [service: notification-service] [INFO] Attempting to publish message to topic topic-4
+[2025-03-28 14:45:33] [service: feedback-service] [INFO] Feedback submitted by user 4076
+[2025-03-28 14:45:34] [service: retry-engine] [INFO] [trace_id=830e3461-ced4-4e7e-8d06-2f506623bfc6] Retrying transaction for order 989349 (Attempt 2)
+[2025-03-28 14:45:35] [service: notification-service] [INFO] Attempting to publish message to topic topic-3
+[2025-03-28 14:45:36] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:37] [service: feedback-service] [INFO] Feedback submitted by user 6375
+[2025-03-28 14:45:38] [service: api-gateway] [INFO] [trace_id=75d1895c-9c50-430d-9001-8dc35277a262] Request received from 108.61.155.216 for /purchase
+[2025-03-28 14:45:39] [service: auth-service] [INFO] Session check for user 4511
+[2025-03-28 14:45:40] [service: orders-db] [INFO] [trace_id=31d9553c-8531-46b2-80c6-cb93dd21bf97] Transaction committed successfully
+[2025-03-28 14:45:41] [service: payment-service] [INFO] [trace_id=f315a82d-4563-4186-be5b-e22527376027] Payment initiated for user 3284
+[2025-03-28 14:45:42] [service: retry-engine] [INFO] [trace_id=41aa98a2-9586-43ae-8dd7-747773b4b5e5] Retrying transaction for order 711299 (Attempt 2)
+[2025-03-28 14:45:43] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:44] [service: support-system] [INFO] Triggered follow-up task for user 2160
+[2025-03-28 14:45:45] [service: payment-service] [INFO] [trace_id=de3e1d17-b6c6-4870-8040-d982a9b00923] Payment initiated for user 8949
+[2025-03-28 14:45:46] [service: feedback-service] [INFO] Feedback submitted by user 9336
+[2025-03-28 14:45:47] [service: feedback-service] [INFO] Feedback submitted by user 3946
+[2025-03-28 14:45:48] [service: cart-service] [INFO] [trace_id=b6891c38-2494-4b66-8fb5-547884537827] Processing cart for user 3827
+[2025-03-28 14:45:49] [service: auth-service] [INFO] Session check for user 1264
+[2025-03-28 14:45:50] [service: feedback-service] [INFO] Feedback submitted by user 1677
+[2025-03-28 14:45:51] [service: feedback-service] [INFO] Feedback submitted by user 5509
+[2025-03-28 14:45:52] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:53] [service: auth-service] [INFO] Session check for user 6915
+[2025-03-28 14:45:54] [service: service-A] [INFO] Sending request to 47.231.119.109
+[2025-03-28 14:45:55] [service: payment-service] [INFO] [trace_id=6dc76598-894f-4902-84ab-d3b5c4158db3] Payment initiated for user 5086
+[2025-03-28 14:45:56] [service: service-A] [INFO] Sending request to 164.154.76.151
+[2025-03-28 14:45:57] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:45:58] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:45:59] [service: notification-service] [INFO] Attempting to publish message to topic topic-5
+[2025-03-28 14:46:00] [service: auth-service] [INFO] Session check for user 7723
+[2025-03-28 14:46:01] [service: reporting-service] [INFO] Possible stale data returned due to replica lag
+[2025-03-28 14:46:02] [service: auth-service] [INFO] Session check for user 4796
+[2025-03-28 14:46:03] [service: feedback-service] [INFO] Feedback submitted by user 2533
+[2025-03-28 14:46:03] [service: kafka] [INFO] Consuming topic topic-3 at partition 3
+[2025-03-28 14:46:03] [service: kafka] [WARN] Lag observed: 596 messages in topic-3
+[2025-03-28 14:46:03] [service: kafka] [ERROR] Consumer timeout - backlog too large
+[2025-03-28 14:46:05] [service: kafka] [INFO] Consuming topic topic-1 at partition 3
+[2025-03-28 14:46:06] [service: service-A] [INFO] Sending request to 178.188.231.84

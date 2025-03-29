@@ -9,13 +9,25 @@ scenarios:
       ip: "{ip}"
     steps:
       - component: api-gateway
-        template: "[{timestamp}] [INFO] [trace_id={trace_id}] Request received from {ip} for /purchase"
+        template: "[{timestamp}] [service: api-gateway] [INFO] [trace_id={trace_id}] Auth request received from {ip}"
+      - component: user-service
+        template: "[{timestamp}] [service: user-service] [INFO] [trace_id={trace_id}] Retrieved user profile successfully"
+      - component: api-gateway
+        template: "[{timestamp}] [service: api-gateway] [INFO] [trace_id={trace_id}] Request forwarded to /purchase"
       - component: payment-service
-        template: "[{timestamp}] [INFO] [trace_id={trace_id}] Payment initiated for user {uid}"
+        template: "[{timestamp}] [service: payment-service] [INFO] [trace_id={trace_id}] Payment initiated for user {uid}"
+      - component: payment-service
+        template: "[{timestamp}] [service: payment-service] [WARN] [trace_id={trace_id}] External gateway responded slowly (delay {ms}ms)"
       - component: orders-db
-        template: "[{timestamp}] [WARN] [trace_id={trace_id}] Order insert delayed by {ms}ms"
+        template: "[{timestamp}] [service: orders-db] [INFO] [trace_id={trace_id}] Preparing to insert order."
+      - component: messaging-service
+        template: "[{timestamp}] [service: messaging-service] [INFO] [trace_id={trace_id}] Order details sent to fulfilment store."
+      - component: fulfilment-service
+        template: "[{timestamp}] [service: fulfilment-service] [INFO] [trace_id={trace_id}] Received new order for fulfilment."
+      - component: orders-db
+        template: "[{timestamp}] [service: orders-db] [WARN] [trace_id={trace_id}] Order insert delayed by {ms}ms."
       - component: payment-service
-        template: "[{timestamp}] [ERROR] [trace_id={trace_id}] Timeout communicating with bank gateway"
+        template: "[{timestamp}] [service: payment-service] [ERROR] [trace_id={trace_id}] Timeout communicating with bank gateway"
 
   - name: kafka_consumer_lag
     category: kafka
@@ -26,11 +38,11 @@ scenarios:
       ip: "{ip}"
     steps:
       - component: kafka-broker-1
-        template: "[{timestamp}] [INFO] Consuming topic {topic} at partition {partition}"
+        template: "[{timestamp}] [service: kafka] [INFO] Consuming topic {topic} at partition {partition}"
       - component: consumer-service
-        template: "[{timestamp}] [WARN] Lag observed: {lag} messages in {topic}"
+        template: "[{timestamp}] [service: kafka] [WARN] Lag observed: {lag} messages in {topic}"
       - component: consumer-service
-        template: "[{timestamp}] [ERROR] Consumer timeout - backlog too large"
+        template: "[{timestamp}] [service: kafka] [ERROR] Consumer timeout - backlog too large"
 
   - name: disk_io_error
     category: disk
@@ -40,9 +52,9 @@ scenarios:
       timestamp: "{timestamp}"
     steps:
       - component: storage-engine
-        template: "[{timestamp}] [WARN] Disk usage crossed 90% at {mount_path}"
+        template: "[{timestamp}] [service: storage-engine] [WARN] Disk usage crossed 90% at {mount_path}"
       - component: db-node-3
-        template: "[{timestamp}] [ERROR] Write failure at {mount_path} - retrying..."
+        template: "[{timestamp}] [service: db-node-3] [ERROR] Write failure at {mount_path} - retrying..."
 
   - name: network_packet_loss
     category: network
@@ -54,11 +66,11 @@ scenarios:
       target_ip: "{target_ip}"
     steps:
       - component: service-A
-        template: "[{timestamp}] [INFO] Sending request to {target_ip}"
+        template: "[{timestamp}] [service: service-A] [INFO] Sending request to {target_ip}"
       - component: network-monitor
-        template: "[{timestamp}] [WARN] High latency detected to {target_ip}"
+        template: "[{timestamp}] [service: network-monitor] [WARN] High latency detected to {target_ip}"
       - component: service-A
-        template: "[{timestamp}] [ERROR] Packet loss detected. Retries exhausted."
+        template: "[{timestamp}] [service: service-A] [ERROR] Packet loss detected. Retries exhausted."
 
   - name: customer_satisfaction_drop
     category: business-insight
@@ -69,8 +81,121 @@ scenarios:
       uid: "{uid}"
     steps:
       - component: feedback-service
-        template: "[{timestamp}] [INFO] Feedback submitted by user {uid}"
+        template: "[{timestamp}] [service: feedback-service] [INFO] Feedback submitted by user {uid}"
       - component: sentiment-engine
-        template: "[{timestamp}] [WARN] Negative sentiment score: {score} for user {uid}"
+        template: "[{timestamp}] [service: sentiment-engine] [WARN] Negative sentiment score: {score} for user {uid}"
       - component: support-system
-        template: "[{timestamp}] [INFO] Triggered follow-up task for user {uid}"
+        template: "[{timestamp}] [service: support-system] [INFO] Triggered follow-up task for user {uid}"
+
+  - name: microservice_latency_spike
+    category: latency
+    description: "High latency and failures across services and APIs"
+    count: 5
+    shared_context:
+      trace_id: "{trace_id}"
+      timestamp: "{timestamp}"
+      ip: "{ip}"
+    steps:
+      - component: api-gateway
+        template: "[{timestamp}] [service: api-gateway] [INFO] [trace_id={trace_id}] Request received from {ip} for /purchase"
+      - component: payment-service
+        template: "[{timestamp}] [service: payment-service] [INFO] [trace_id={trace_id}] Payment initiated for user {uid}"
+      - component: orders-db
+        template: "[{timestamp}] [service: orders-db] [WARN] [trace_id={trace_id}] Order insert delayed by {ms}ms"
+      - component: payment-service
+        template: "[{timestamp}] [service: payment-service] [ERROR] [trace_id={trace_id}] Timeout communicating with bank gateway"
+      - component: api-gateway
+        template: "[{timestamp}] [service: api-gateway] [ERROR] [trace_id={trace_id}] HTTP 502 Bad Gateway while processing /purchase"
+      - component: transaction-engine
+        template: "[{timestamp}] [service: transaction-engine] [ERROR] [trace_id={trace_id}] Transaction rollback initiated due to service failure"
+      - component: circuit-breaker
+        template: "[{timestamp}] [service: circuit-breaker] [WARN] [trace_id={trace_id}] Circuit breaker tripped for payment-service"
+      - component: api-gateway
+        template: "[{timestamp}] [service: api-gateway] [INFO] [trace_id={trace_id}] Retrying /purchase after delay of {ms}ms"
+
+  - name: api_failure_5xx
+    category: api
+    description: "500 series errors due to internal exceptions"
+    count: 3
+    shared_context:
+      timestamp: "{timestamp}"
+      trace_id: "{trace_id}"
+    steps:
+      - component: cart-service
+        template: "[{timestamp}] [service: cart-service] [INFO] [trace_id={trace_id}] Processing cart for user {uid}"
+      - component: cart-service
+        template: "[{timestamp}] [service: cart-service] [ERROR] [trace_id={trace_id}] HTTP 500 Internal Server Error while applying promo code"
+      - component: api-gateway
+        template: "[{timestamp}] [service: api-gateway] [ERROR] [trace_id={trace_id}] Received 500 response from cart-service"
+
+  - name: circuit_breaker_open
+    category: resilience
+    description: "Service unavailable due to circuit breaker"
+    count: 2
+    shared_context:
+      timestamp: "{timestamp}"
+      trace_id: "{trace_id}"
+    steps:
+      - component: user-service
+        template: "[{timestamp}] [service: user-service] [WARN] [trace_id={trace_id}] Circuit breaker OPEN - rejecting all requests"
+      - component: api-gateway
+        template: "[{timestamp}] [service: api-gateway] [ERROR] [trace_id={trace_id}] HTTP 503 Service Unavailable from user-service"
+
+  - name: transaction_failure_retry
+    category: transaction
+    description: "Retrying transactions due to database failure"
+    count: 4
+    shared_context:
+      timestamp: "{timestamp}"
+      trace_id: "{trace_id}"
+    steps:
+      - component: checkout-service
+        template: "[{timestamp}] [service: checkout-service] [INFO] [trace_id={trace_id}] Initiating checkout for order {order_id}"
+      - component: orders-db
+        template: "[{timestamp}] [service: orders-db] [ERROR] [trace_id={trace_id}] Transaction write failed due to deadlock"
+      - component: retry-engine
+        template: "[{timestamp}] [service: retry-engine] [INFO] [trace_id={trace_id}] Retrying transaction for order {order_id} (Attempt 2)"
+      - component: orders-db
+        template: "[{timestamp}] [service: orders-db] [INFO] [trace_id={trace_id}] Transaction committed successfully"
+
+  - name: kafka_publish_failure
+    category: kafka
+    description: "Kafka publish delay and failure"
+    count: 3
+    shared_context:
+      timestamp: "{timestamp}"
+      topic: "{topic}"
+    steps:
+      - component: notification-service
+        template: "[{timestamp}] [service: notification-service] [INFO] Attempting to publish message to topic {topic}"
+      - component: kafka-broker-3
+        template: "[{timestamp}] [service: kafka-broker-3] [WARN] Publish delay > 1s observed for topic {topic}"
+      - component: kafka-broker-3
+        template: "[{timestamp}] [service: kafka-broker-3] [ERROR] Failed to publish message to topic {topic} after 3 attempts"
+
+  - name: database_replica_lag
+    category: database
+    description: "Replica lag causing stale reads"
+    count: 2
+    shared_context:
+      timestamp: "{timestamp}"
+    steps:
+      - component: replica-monitor
+        template: "[{timestamp}] [service: replica-monitor] [WARN] Replica lag exceeds threshold - delay of {ms}ms"
+      - component: reporting-service
+        template: "[{timestamp}] [service: reporting-service] [INFO] Possible stale data returned due to replica lag"
+
+  - name: user_session_drop
+    category: auth
+    description: "Session expired or dropped mid-action"
+    count: 2
+    shared_context:
+      timestamp: "{timestamp}"
+      uid: "{uid}"
+    steps:
+      - component: auth-service
+        template: "[{timestamp}] [service: auth-service] [INFO] Session check for user {uid}"
+      - component: auth-service
+        template: "[{timestamp}] [service: auth-service] [WARN] Token expired for user {uid}"
+      - component: api-gateway
+        template: "[{timestamp}] [service: api-gateway] [ERROR] HTTP 401 Unauthorized - session expired"

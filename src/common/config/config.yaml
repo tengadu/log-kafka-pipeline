@@ -14,6 +14,10 @@ scenarios:
   config: "./src/log-generator/config/scenario_config.yaml"
   log_file: "./resources/data/synthetic_logs/synthetic_logs.txt"
 
+scenarios_v2:
+  config: "./src/log-generator/config/scenario_config_v2.yaml"
+  log_file: "./resources/data/synthetic_logs/synthetic_logs_v2.txt"
+
 log:
   file_path: "./resources/data/logs/apache.txt"
   source_name: "apache"

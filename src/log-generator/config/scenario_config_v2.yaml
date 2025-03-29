@@ -1,0 +1,140 @@
+manual_mode:
+  enabled: true
+  scenarios_to_run: ["upi_happy_flow", "http_circuit_breaker",
+                     "storage_warning", "storage_severe",
+                     "kafka_lag", "kafka_failure",
+                     "ddos_attack", "auth_token_expiry",
+                     "network_latency", "packet_loss"]  # e.g. ["upi_happy_flow", "kafka_lag"]
+
+dynamic_fields:
+  enable_ip: true
+  enable_latency: true
+  enable_lag: true
+  enable_disk_quota: true
+  enable_user_id: true
+  enable_trace_id: true
+  include_user_agent: true
+
+scenarios:
+
+  - id: upi_happy_flow
+    type: happy_path
+    weight: 995
+    enabled: true
+    flow: [api-gateway, user-service, kyc-service, upi-router, payment-service, transaction-engine, api-gateway]
+    log_level: INFO
+    ai_reasoning: false
+    correlated_logs:
+      - api-gateway: "Request received from {ip_address} for {api_endpoint} | user-agent=Mozilla/5.0"
+      - user-service: "User profile {user_id} fetched successfully"
+      - kyc-service: "KYC status verified for user {user_id}"
+      - confirmation-service: "User confirmation received from {user_id}"
+      - pin-validation-service: "User PIN validated successfully for {user_id}"
+      - upi-router: "Routing payment request to bank PSP"
+      - payment-service: "Payment of INR 1000 initiated for user {user_id}"
+      - transaction-engine: "Transaction logged successfully for trace_id {trace_id}"
+      - api-gateway: "Response sent to client with status 200"
+
+  - id: http_circuit_breaker
+    type: error_path
+    weight: 3
+    enabled: true
+    flow: [api-gateway, user-service, upi-router]
+    error_at: upi-router
+    log_level: [WARN, ERROR]
+    ai_reasoning: true
+    correlated_logs:
+      - user-service: "User session valid for user {user_id}"
+      - upi-router: "HTTP 502 - socket closed by peer"
+      - api-gateway: "Circuit breaker tripped for upi-router (latency {latency_ms})"
+      - api-gateway: "Retry attempt logged for payment"
+
+  - id: storage_warning
+    type: storage_degradation
+    weight: 0.5
+    enabled: true
+    flow: [storage-engine, disk, db-node, api-gateway]
+    log_level: [WARN]
+    ai_reasoning: true
+    correlated_logs:
+      - storage-engine: "Disk quota at {disk_quota} on /mnt/data1"
+      - db-node: "Replica lag increased to {lag_ms} on db-node-2"
+      - api-gateway: "Transaction delay noticed due to slow write acknowledgement"
+
+  - id: storage_severe
+    type: storage_failure
+    weight: 0.5
+    enabled: true
+    flow: [storage-engine, disk, db-node, api-gateway]
+    log_level: [WARN, ERROR]
+    ai_reasoning: true
+    correlated_logs:
+      - storage-engine: "Disk quota critical at {disk_quota} on /mnt/data1 [E_IO_DISK_95]"
+      - db-node: "Write failure due to disk I/O saturation (latency {latency_ms}) [E_DB_WRITE_TIMEOUT]"
+      - api-gateway: "HTTP 503 Service Unavailable due to downstream failure"
+
+  - id: kafka_lag
+    type: infra_warning
+    weight: 0.3
+    enabled: true
+    flow: [kafka-broker, kafka-consumer]
+    log_level: [WARN]
+    ai_reasoning: true
+    correlated_logs:
+      - kafka-broker: "Lag observed: {lag_ms}ms in topic topic-upi-events"
+      - kafka-consumer: "Backpressure building on consumer group payment-handler"
+
+  - id: kafka_failure
+    type: infra_error
+    weight: 0.2
+    enabled: true
+    flow: [kafka-broker, kafka-consumer]
+    log_level: [WARN, ERROR]
+    ai_reasoning: true
+    correlated_logs:
+      - kafka-broker: "Publish failure on topic topic-upi-events after 3 retries"
+      - kafka-consumer: "Consumer timeout - backlog too large (lag: {lag_ms})"
+
+  - id: ddos_attack
+    type: security_warning
+    weight: 0.3
+    enabled: true
+    flow: [api-gateway, security-engine]
+    log_level: [WARN]
+    ai_reasoning: true
+    correlated_logs:
+      - api-gateway: "Multiple requests received from {ip_address} (possible anomaly)"
+      - security-engine: "Spike in failed requests from subnet 192.168.0.*"
+
+  - id: auth_token_expiry
+    type: security_error
+    weight: 0.3
+    enabled: true
+    flow: [auth-service, api-gateway]
+    log_level: [INFO, WARN, ERROR]
+    ai_reasoning: true
+    correlated_logs:
+      - auth-service: "Session expired for user {user_id}"
+      - api-gateway: "HTTP 401 Unauthorized access attempt"
+
+  - id: network_latency
+    type: network_warning
+    weight: 0.4
+    enabled: true
+    flow: [service-router, upi-router]
+    log_level: [WARN]
+    ai_reasoning: true
+    correlated_logs:
+      - service-router: "Latency of {latency_ms}ms observed to PSP endpoint {ip_address}"
+      - upi-router: "Retrying connection to {ip_address}"
+
+  - id: packet_loss
+    type: network_error
+    weight: 0.2
+    enabled: true
+    flow: [service-router, upi-router]
+    log_level: [WARN, ERROR]
+    ai_reasoning: true
+    correlated_logs:
+      - service-router: "Packet loss detected to {ip_address} - retries exhausted"
+      - upi-router: "Downstream unresponsive - tripping circuit breaker"
