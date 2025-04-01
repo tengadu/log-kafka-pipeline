@@ -18,6 +18,10 @@ scenarios_v2:
   config: "./src/log-generator/config/scenario_config_v2.yaml"
   log_file: "./resources/data/synthetic_logs/synthetic_logs_v2.txt"
 
+scenarios_v3:
+  config: "./src/log_generator_v3/config/v3_config_ecommerce.yaml"
+  log_file: "./resources/data/synthetic_logs/v3_logs_ecommernce.txt"
+
 log:
   file_path: "./resources/data/logs/apache.txt"
   source_name: "apache"

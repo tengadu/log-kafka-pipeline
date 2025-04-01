@@ -4,6 +4,8 @@ import yaml
 import os
 import time
 import json
+import string
+import re
 from datetime import datetime, timedelta
 from datetime import datetime, timedelta
 from common.config_loader import load_config
@@ -13,12 +15,25 @@ CONFIG_PATH = config['scenarios_v2']['config']
 LOG_FILE_PATH = config['scenarios_v2']['log_file']
 
 service_categories = {
-    "api": ["api-gateway", "user-service", "kyc-service", "confirmation-service", "pin-validation-service", "upi-router", "payment-service", "transaction-engine"],
+    "api": ["api-gateway", "user-service", "kyc-service",
+            "confirmation-service", "pin-validation-service",
+            "upi-router", "payment-service", "transaction-engine"],
     "infra": ["disk", "storage-engine", "db-node"],
     "network": ["service-router"],
     "security": ["security-engine", "auth-service"],
-    "kafka": ["kafka-broker", "kafka-consumer"]
+    "kafka": ["kafka-broker", "kafka-consumer"],
+    "rdbms": ["rdbms-cluster", "rdbms-monitor", "rdbms-storage"]
 }
+
+DISK_PATHS = [
+    "/mnt/data1",
+    "/mnt/data2",
+    "/data/db",
+    "/var/lib/postgresql",
+    "/opt/app/storage",
+    "/vol1/appdata",
+    "/dev/sdb1"
+]
 
 # Add this somewhere at the top or in config
 API_ENDPOINTS = [
@@ -29,6 +44,10 @@ API_ENDPOINTS = [
     "/transaction/history",
     "/auth/token"
 ]
+
+K8S_INFRA_COMPONENTS = {"kubelet", "hpa-controller", "metrics-server",
+                        "k8s-master", "scheduler", "docker-daemon",
+                        "container-runtime", "rdbms-cluster", "rdbms-monitor", "rdbms-storage"}
 
 # ------------------------ Config Loader ------------------------
 def load_scenario_config():
@@ -41,8 +60,12 @@ def generate_trace_id():
     return str(uuid.uuid4())
 
 
+def get_payment_amount():
+    return str(random.randint(500, 50000))
+
+
 def generate_user_id():
-    return str(random.randint(1000, 9999))
+    return str(random.randint(100000000000, 999999999999))
 
 
 def generate_ip():
@@ -61,6 +84,18 @@ def generate_disk_quota():
     return f"{random.randint(65, 99)}%"
 
 
+# Add this near the top of the file if not already present
+def generate_pod_name(service_name):
+    suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+    return f"{service_name}-{suffix}"
+
+
+def generate_replica_count():
+    before = random.choice([2, 3, 4, 5])
+    after = before + random.randint(1, 3)
+    return before, after
+
+
 # Dynamic topic inference (optional override from message)
 def infer_topic(service):
     if "kafka" in service:
@@ -72,19 +107,28 @@ def infer_topic(service):
     return "topic-generic"
 
 
-def get_log_level(msg_template):
+def get_log_level(msg_template, service=None):
     error_keywords = ["error", "503", "failure", "unavailable", "denied", "unauthorized"]
-    warn_keywords = ["critical", "slow", "lag", "quota", "retry", "degraded"]
+    warn_keywords = ["critical", "slow", "lag", "quota", "retry", "degraded", "exceeded 80%"]
+    success_keywords = ["successfully", "verified", "fetched", "confirmed", "initiated"]
+
+    info_services = {"rdbms", "nosql", "transaction-engine",
+                           "payment-service", "user-service", "kyc-service",
+                           "confirmation-service", "pin-validation-service"}
+
+    if service in info_services:
+        return "INFO"
 
     msg_lower = msg_template.lower()
-    if any(word in msg_lower for word in error_keywords):
-        level = "ERROR"
-    elif any(word in msg_lower for word in warn_keywords):
-        level = "WARN"
-    else:
-        level = "INFO"
 
-    return level
+    if any(word in msg_lower for word in error_keywords):
+        return "ERROR"
+    elif any(word in msg_lower for word in warn_keywords):
+        return "WARN"
+    elif any(word in msg_lower for word in success_keywords):
+        return "INFO"
+    else:
+        return "INFO"
 
 
 def get_service_category(service):
@@ -121,7 +165,7 @@ class LogSimulator:
 
     def substitute(self, text, values):
         for key, val in values.items():
-            text = text.replace(f"{{{key}}}", val)
+            text = text.replace(f"{{{key}}}", str(val))
         return text
 
     def generate_flow_logs(self, flow, log_level, trace_id, dynamic_values, correlated_services):
@@ -151,7 +195,8 @@ class LogSimulator:
                 # Enhance message template if it's too generic or needs category styling
                 if "Generic log" in msg_template or msg_template.strip() == "":
                     if category == "infra":
-                        msg_template = "infraLog: service={service}, diskQuota={disk_quota}, lag={lag_ms}, latency={latency_ms}"
+                        msg_template = ("infraLog: service={service}, diskQuota={disk_quota}, "
+                                        "lag={lag_ms}, latency={latency_ms}")
                     elif category == "kafka":
                         msg_template = "kafkaLog: service={service}, topic=topic-upi-events, lag={lag_ms}ms"
                     elif category == "security":
@@ -164,9 +209,18 @@ class LogSimulator:
                 # Fill in placeholders
                 dynamic_values["service"] = service
                 message = self.substitute(msg_template, dynamic_values)
-                level = get_log_level(message)
+                level = get_log_level(message, service)
 
-                log = self.format_log(timestamp, level, service, trace_id, message, True)
+                omit_trace = service in K8S_INFRA_COMPONENTS
+                log = self.format_log(
+                    timestamp,
+                    level,
+                    service,
+                    trace_id,
+                    message,
+                    omit_trace_id=omit_trace
+                )
+
                 logs.append(log)
                 correlated_services.add(service)
                 timestamp += timedelta(milliseconds=random.randint(100, 800))
@@ -179,31 +233,16 @@ class LogSimulator:
                 return category
         return "generic"
 
-
-
-    def format_log(self, timestamp, level, service, trace_id, message, is_correlated=False):
+    def format_log(self, timestamp, level, service, trace_id, message, omit_trace_id=False):
         category = self.get_service_category(service)
-        timestamp_str = timestamp.strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]  # Millisecond precision
-        iso_timestamp = timestamp.isoformat(timespec='milliseconds') + "Z"
+        timestamp_str = timestamp.strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+        iso_timestamp = timestamp.isoformat(timespec='milliseconds') + " Z"
 
-        if category == "api":
-            return f"[{iso_timestamp}] [{level}] [trace_id={trace_id}] [service={service}] {message}"
+        # ✳️ Skip trace_id if explicitly told to
+        include_trace = not omit_trace_id and self.dynamic_fields.get("enable_trace_id", True)
 
-        elif category == "infra":
-            return f"[{iso_timestamp}] [{level}] [disk={service}] :: {message}"
-
-        elif category == "database":
-            return f"[{iso_timestamp}] [{level}] [db={service}] - {message}"
-
-        elif category == "network":
-            return f"[{timestamp_str}] [{level}] [device={service}] ::: {message}"
-
-        elif category == "security":
-            return f"[{timestamp_str}] [{level}] [module={service}] >>> {message}"
-
-
-        elif category == "kafka":
-            # Infer topic name from service or message
+        # 🌀 Kafka logs = JSON format
+        if category == "kafka":
             topic_name = infer_topic(service)
 
             log_entry = {
@@ -216,50 +255,115 @@ class LogSimulator:
             if topic_name:
                 log_entry["topic"] = topic_name
 
-            if self.dynamic_fields.get("enable_trace_id"):
+            if include_trace:
                 log_entry["trace_id"] = trace_id
 
             return json.dumps(log_entry)
 
-        else:  # fallback
-            return f"[{iso_timestamp}] [{level}] [component={service}] {message}"
+        # 🌐 Category-specific string formats
+        if category == "api":
+            if include_trace:
+                return f"[{iso_timestamp}] [{level}] [trace_id={trace_id}] [service={service}] {message}"
+            else:
+                return f"[{iso_timestamp}] [{level}] [service={service}] {message}"
+
+        elif category == "infra":
+            return f"[{timestamp_str}] [{level}] [disk={service}] :: {message}"
+
+        elif category == "rdbms":
+            return f"[{timestamp_str}] [{level}] [db={service}] - {message}"
+
+        elif category == "database":
+            return f"[{timestamp_str}] [{level}] [db={service}] - {message}"
+
+        elif category == "network":
+            return f"[{timestamp_str}] [{level}] [device={service}] ::: {message}"
+
+        elif category == "security":
+            return f"[{timestamp_str}] [{level}] [module={service}] >>> {message}"
+
+        elif service == "rdbms":
+            return f"[{timestamp_str}] [{level}] [component={service}] >>> {message}"
+
+        elif service == "nosql":
+            return f"[{timestamp_str}] [{level}] [component={service}] >>> {message}"
+
+        else:  # default fallback
+            if include_trace:
+                return f"[{iso_timestamp}] [{level}] [trace_id={trace_id}] [component={service}] {message}"
+            else:
+                return f"[{timestamp_str}] [{level}] [component={service}] {message}"
 
     def simulate(self):
         selected_scenarios = self.pick_scenario()
-        api_endpoint = random.choice(API_ENDPOINTS)
         all_logs = []
 
         for scenario in selected_scenarios:
-            trace_id = generate_trace_id() if self.dynamic_fields.get("enable_trace_id") else "static-trace"
-            user_id = generate_user_id() if self.dynamic_fields.get("enable_user_id") else "0000"
-            ip_address = generate_ip() if self.dynamic_fields.get("enable_ip") else "127.0.0.1"
-            latency_ms = generate_latency() if self.dynamic_fields.get("enable_latency") else "0"
-            lag_ms = generate_lag() if self.dynamic_fields.get("enable_lag") else "0"
-            disk_quota = generate_disk_quota() if self.dynamic_fields.get("enable_disk_quota") else "0%"
-
-            dynamic_values = {
-                "trace_id": trace_id,
-                "user_id": user_id,
-                "ip_address": ip_address,
-                "latency_ms": latency_ms,
-                "lag_ms": lag_ms,
-                "disk_quota": disk_quota,
-                "api_endpoint": api_endpoint
-            }
+            dynamic_values = self.get_dynamic_values()
+            trace_id = dynamic_values["trace_id"]
 
             correlated = scenario.get("correlated_logs", [])
             correlated_logs, correlated_services = self.generate_correlated_logs(correlated, trace_id, dynamic_values)
-            flow_logs = self.generate_flow_logs(scenario["flow"], scenario["log_level"], trace_id, dynamic_values, correlated_services)
+            flow = scenario.get("flow", [])
+            log_levels = scenario.get("log_level", [])
+            flow_logs = self.generate_flow_logs(flow, log_levels, trace_id, dynamic_values, correlated_services)
 
             all_logs.extend(flow_logs + correlated_logs)
 
         return all_logs
 
-    def write_logs_to_file(self, logs):
+    def get_dynamic_values(self):
+        trace_id = generate_trace_id() if self.dynamic_fields.get("enable_trace_id") else "static-trace"
+        user_id = generate_user_id() if self.dynamic_fields.get("enable_user_id") else "0000"
+        ip_address = generate_ip() if self.dynamic_fields.get("enable_ip") else "127.0.0.1"
+        latency_ms = generate_latency() if self.dynamic_fields.get("enable_latency") else "0"
+        lag_ms = generate_lag() if self.dynamic_fields.get("enable_lag") else "0"
+        disk_quota = generate_disk_quota() if self.dynamic_fields.get("enable_disk_quota") else "0%"
+        payment_amount = get_payment_amount()
+
+        # Dynamically pick service for infra scenarios like kubernetes autoscaling
+        service_name = random.choice([
+            "api-gateway", "user-service", "kyc-service", "upi-router",
+            "payment-service", "transaction-engine"
+        ])
+
+        # Generate pods for that service
+        pod_old = generate_pod_name(service_name)
+        pod_new = generate_pod_name(service_name)
+
+        # Generate replica counts
+        replicas_before, replicas_after = generate_replica_count()
+
+        return {
+            "trace_id": trace_id,
+            "user_id": user_id,
+            "ip_address": ip_address,
+            "latency_ms": latency_ms,
+            "lag_ms": lag_ms,
+            "disk_quota": disk_quota,
+            "api_endpoint": random.choice(API_ENDPOINTS),
+            "service_name": service_name,
+            "pod_old": pod_old,
+            "pod_new": pod_new,
+            "payment_amount": payment_amount,
+            "replicas_before": str(replicas_before),
+            "replicas_after": str(replicas_after),
+            "replica_id": random.randint(1, 3),
+            "replica_lag": random.randint(1000, 3000),
+            "disk_latency": random.randint(300, 700),
+            "qps": random.randint(600, 900),
+            "cache_hit_ratio": random.randint(90, 99),
+            "shard_id": random.randint(1, 3),
+            "disk_name": random.choice(DISK_PATHS),
+            "resync_node": random.randint(1, 3)
+        }
+
+    @staticmethod
+    def write_logs_to_file(logs):
         os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
         with open(LOG_FILE_PATH, "a") as f:
-            for log in logs:
-                f.write(log + "\n")
+            for log_line in logs:
+                f.write(log_line + "\n")
 
 
 # ------------------------ Runner ------------------------

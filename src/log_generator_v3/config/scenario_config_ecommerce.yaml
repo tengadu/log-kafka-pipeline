@@ -1,0 +1,166 @@
+templates:
+  api-gateway:
+    - INFO: "Request received from {ip_address} for {api_endpoint} | user-agent=Mozilla/5.0"
+    - WARN: "Request to {api_endpoint} from {ip_address} took {latency} ms | user-agent=Mozilla/5.0"
+    - ERROR: "Request to {api_endpoint} failed due to {error_message} | user-agent=Mozilla/5.0"
+
+  product-service:
+    - INFO: "Fetched product info for item {product_id}"
+    - WARN: "Slow product lookup for item {product_id} - {latency} ms"
+    - ERROR: "Product service failed to fetch item {product_id} due to {error_message}"
+
+  cart-service:
+    - INFO: "User {user_id} added item {product_id} to cart"
+    - WARN: "Cart update delay for user {user_id} - {latency} ms"
+    - ERROR: "Failed to update cart for user {user_id} due to {error_message}"
+
+  order-service:
+    - INFO: "Order placed for user {user_id}, order ID {order_id}"
+    - WARN: "Order confirmation took longer than expected - {latency} ms"
+    - ERROR: "Order processing failed for user {user_id} - {error_message}"
+
+  payment-gateway:
+    - INFO: "Payment of {amount} processed for user {user_id}"
+    - WARN: "Payment latency warning for user {user_id} - {latency} ms"
+    - ERROR: "Payment failure for user {user_id} - Reason: {error_message}"
+
+  delivery-service:
+    - INFO: "Shipment scheduled for order {order_id}"
+    - WARN: "Delivery delay due to route {route_id} congestion"
+    - ERROR: "Delivery failed for order {order_id} due to {error_message}"
+
+  review-service:
+    - INFO: "Review submitted for product {product_id} by user {user_id}"
+    - WARN: "Review submission took longer - {latency} ms"
+    - ERROR: "Review service unavailable for product {product_id}"
+
+  rdbms-cluster:
+    - INFO: "Primary DB node postgres-1 up and healthy"
+    - WARN: "All 3 replicas are in sync with primary (replication lag < 100ms)"
+    - ERROR: "Replica postgres-{replica_id} lag at {replica_lag}ms"
+
+  rdbms-monitor:
+    - INFO: "Query throughput steady at {qps} QPS across cluster"
+    - WARN: "Spike in long-running queries on node postgres-{replica_id}"
+    - ERROR: "Deadlock detected on node postgres-{replica_id}"
+
+  rdbms-storage:
+    - INFO: "Disk I/O on primary within normal threshold"
+    - WARN: "Disk latency rising on primary node - {disk_latency}ms"
+    - ERROR: "Write I/O bottleneck on /mnt/db [E_RDB_IO_SLOW]"
+
+  metrics-server:
+    - INFO: "Cluster CPU usage: {cpu_usage}%, Memory usage: {mem_usage}%"
+    - WARN: "CPU usage on pod {pod_name} exceeded 80%"
+    - ERROR: "Metrics daemon unresponsive on node {node_name}"
+
+  kubelet:
+    - INFO: "All {pod_count} pods running and healthy"
+    - WARN: "Pod {pod_name} memory usage exceeded threshold"
+    - ERROR: "Pod {pod_name} evicted due to memory pressure"
+
+  hpa-controller:
+    - INFO: "Scaling deployment {deployment_name} from {replicas_before} to {replicas_after}"
+    - WARN: "Aggressive scaling detected on {deployment_name}"
+    - ERROR: "Failed to scale deployment {deployment_name}"
+
+  k8s-master:
+    - INFO: "All nodes report Ready. Control plane healthy."
+    - WARN: "Intermittent etcd sync delays on control plane"
+    - ERROR: "Master node {node_name} not responding"
+
+  scheduler:
+    - INFO: "No pending pods. Scheduler idle."
+    - WARN: "Scheduler queue build-up detected: {queue_length} pods"
+    - ERROR: "Scheduler crash detected. Last known action: {action}"
+
+  docker-daemon:
+    - INFO: "Container {container_name} running successfully"
+    - WARN: "Restart count high for container {container_name}"
+    - ERROR: "Container {container_name} exited unexpectedly. Exit Code {exit_code}"
+
+  container-runtime:
+    - INFO: "All containers running smoothly on node {node_name}"
+    - WARN: "Runtime latency spikes on container {container_name}"
+    - ERROR: "Crash loop detected for container {container_name}"
+
+workflow:
+  http_logs:
+    ecommerce_search:
+      endpoint: "/search"
+      api_logs:
+        - INFO: [api-gateway, product-service, api-gateway]
+      infra_logs:
+        - INFO: [metrics-server, rdbms-cluster, hpa-controller]
+
+    ecommerce_cart_checkout:
+      endpoint: "/cart/checkout"
+      api_logs:
+        - INFO: [api-gateway, product-service, cart-service, order-service, api-gateway]
+        - WARN: [order-service]
+      infra_logs:
+        - INFO: [metrics-server, rdbms-cluster, rdbms-storage, kubelet, hpa-controller]
+
+    ecommerce_payment:
+      endpoint: "/payment/confirm"
+      api_logs:
+        - INFO: [api-gateway, order-service, payment-gateway, transaction-engine, api-gateway]
+        - WARN: [payment-gateway]
+      infra_logs:
+        - INFO: [metrics-server, rdbms-cluster, nosql, docker-daemon, rdbms-monitor]
+
+    ecommerce_review:
+      endpoint: "/product/review"
+      api_logs:
+        - INFO: [api-gateway, product-service, review-service, api-gateway]
+        - WARN: [review-service]
+      infra_logs:
+        - INFO: [metrics-server, hpa-controller, kubelet, rdbms-cluster]
+
+    ecommerce_delivery:
+      endpoint: "/order/track"
+      api_logs:
+        - INFO: [api-gateway, delivery-service, api-gateway]
+        - WARN: [delivery-service]
+      infra_logs:
+        - INFO: [metrics-server, rdbms-cluster, container-runtime, scheduler]
+
+    ecommerce_return:
+      endpoint: "/order/return"
+      api_logs:
+        - INFO: [api-gateway, order-service, delivery-service, api-gateway]
+        - WARN: [delivery-service]
+      infra_logs:
+        - INFO: [rdbms-storage, rdbms-cluster, kubelet, hpa-controller]
+
+    ecommerce_my_orders:
+      endpoint: "/user/orders"
+      api_logs:
+        - INFO: [api-gateway, user-service, order-service, api-gateway]
+        - WARN: [user-service]
+      infra_logs:
+        - INFO: [metrics-server, rdbms-cluster, nosql, docker-daemon]
+
+    ecommerce_rating:
+      endpoint: "/product/rating"
+      api_logs:
+        - INFO: [api-gateway, product-service, review-service, api-gateway]
+        - WARN: [review-service]
+      infra_logs:
+        - INFO: [kubelet, container-runtime, rdbms-cluster, rdbms-monitor]
+
+    ecommerce_wishlist:
+      endpoint: "/user/wishlist"
+      api_logs:
+        - INFO: [api-gateway, user-service, product-service, api-gateway]
+        - WARN: [product-service]
+      infra_logs:
+        - INFO: [metrics-server, hpa-controller, scheduler]
+
+    ecommerce_auth_login:
+      endpoint: "/auth/login"
+      api_logs:
+        - INFO: [api-gateway, auth-service, user-service, api-gateway]
+        - WARN: [auth-service]
+      infra_logs:
+        - INFO: [k8s-master, docker-daemon, metrics-server]

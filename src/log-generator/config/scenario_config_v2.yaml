@@ -1,9 +1,14 @@
 manual_mode:
-  enabled: true
+  enabled: false
   scenarios_to_run: ["upi_happy_flow", "http_circuit_breaker",
                      "storage_warning", "storage_severe",
                      "kafka_lag", "kafka_failure",
+                     "k8s_cluster_health", "k8s_autoscaling",
+                     "kubernetes_node_warning", "docker_restart_warning",
+                     "container_crash_loop",
                      "ddos_attack", "auth_token_expiry",
+                     "nosql-cluster-fatigue", "nosql-cluster-healthy",
+                     "rdbms-cluster-fatigue", "rdbms-cluster-healthy",
                      "network_latency", "packet_loss"]  # e.g. ["upi_happy_flow", "kafka_lag"]
 
 dynamic_fields:
@@ -14,12 +19,17 @@ dynamic_fields:
   enable_user_id: true
   enable_trace_id: true
   include_user_agent: true
+  pod_old: true
+  pod_new: true
+  replicas_before: true
+  replicas_after: true
+  payment_amount: true
 
 scenarios:
 
   - id: upi_happy_flow
     type: happy_path
-    weight: 995
+    weight: 800
     enabled: true
     flow: [api-gateway, user-service, kyc-service, upi-router, payment-service, transaction-engine, api-gateway]
     log_level: INFO
@@ -28,12 +38,17 @@ scenarios:
       - api-gateway: "Request received from {ip_address} for {api_endpoint} | user-agent=Mozilla/5.0"
       - user-service: "User profile {user_id} fetched successfully"
       - kyc-service: "KYC status verified for user {user_id}"
+      - metrics-server: "CPU usage on pod {pod_old} exceeded 60%"
       - confirmation-service: "User confirmation received from {user_id}"
       - pin-validation-service: "User PIN validated successfully for {user_id}"
       - upi-router: "Routing payment request to bank PSP"
-      - payment-service: "Payment of INR 1000 initiated for user {user_id}"
+      - payment-service: "Payment of INR {payment_amount} initiated for user {user_id}"
+      - rdbms: "INSERT INTO transactions (trace_id, user_id, amount) VALUES ({trace_id}, {user_id}, {payment_amount});"
+      - nosql: "Redis::SET user:{user_id}:txn_status = 'success'"
       - transaction-engine: "Transaction logged successfully for trace_id {trace_id}"
       - api-gateway: "Response sent to client with status 200"
+      - hpa-controller: "Scaling deployment {service_name} from {replicas_before} to {replicas_after} replicas in namespace fintech-prod"
+      - kubelet: "New pod {pod_new} created successfully"
 
   - id: http_circuit_breaker
     type: error_path
@@ -57,8 +72,11 @@ scenarios:
     log_level: [WARN]
     ai_reasoning: true
     correlated_logs:
-      - storage-engine: "Disk quota at {disk_quota} on /mnt/data1"
-      - db-node: "Replica lag increased to {lag_ms} on db-node-2"
+      - storage-engine: "Disk quota at {disk_quota} on {disk_name}"
+      - rdbms-cluster: "Replica postgres-{replica_id} lag at {replica_lag}ms (threshold: 1000ms)"
+      - rdbms-storage: "Write I/O bottleneck detected on primary (disk latency: {disk_latency}ms) [E_RDB_IO_SLOW]"
+      - rdbms-monitor: "Spike in long-running queries on node postgres-{replica_id}"
+#      - db-node: "Replica lag increased to {lag_ms} on db-node-2"
       - api-gateway: "Transaction delay noticed due to slow write acknowledgement"
 
   - id: storage_severe
@@ -69,7 +87,7 @@ scenarios:
     log_level: [WARN, ERROR]
     ai_reasoning: true
     correlated_logs:
-      - storage-engine: "Disk quota critical at {disk_quota} on /mnt/data1 [E_IO_DISK_95]"
+      - storage-engine: "Disk quota critical at {disk_quota} on {disk_name} [E_IO_DISK_95]"
       - db-node: "Write failure due to disk I/O saturation (latency {latency_ms}) [E_DB_WRITE_TIMEOUT]"
       - api-gateway: "HTTP 503 Service Unavailable due to downstream failure"
 
@@ -94,6 +112,65 @@ scenarios:
     correlated_logs:
       - kafka-broker: "Publish failure on topic topic-upi-events after 3 retries"
       - kafka-consumer: "Consumer timeout - backlog too large (lag: {lag_ms})"
+
+  - id: k8s_cluster_health
+    type: cluster_health
+    weight: 170
+    enabled: true
+    flow: [k8s-master, scheduler, kubelet, metrics-server]
+    log_level: [INFO]
+    ai_reasoning: false
+    correlated_logs:
+      - k8s-master: "All nodes report Ready. Control plane healthy."
+      - scheduler: "No pending pods in queue. Scheduler idle."
+      - kubelet: "All 37 pods running and healthy"
+      - metrics-server: "Cluster CPU usage: 43%. Memory usage: 62%"
+
+  - id: k8s_autoscaling
+    type: cluster_scaling
+    weight: 20
+    enabled: true
+    flow: [metrics-server, hpa-controller, kubelet]
+    log_level: [INFO, WARN]
+    ai_reasoning: true
+    correlated_logs:
+    - metrics-server: "CPU usage on pod {pod_old} exceeded 80%"
+    - hpa-controller: "Scaling deployment {service_name} from {replicas_before} to {replicas_after} replicas"
+    - kubelet: "New pod {pod_new} created successfully in namespace fintech-prod"
+
+  - id: kubernetes_node_warning
+    type: infra_warning
+    weight: 2
+    enabled: true
+    flow: [kubelet, scheduler, node]
+    log_level: [WARN]
+    ai_reasoning: true
+    correlated_logs:
+      - kubelet: "Evicting pod [upi-router] due to memory pressure on node [node-5]"
+      - scheduler: "Pod [upi-router] rescheduled to node-2"
+      - node: "Node [node-5] memory usage: 95%"
+
+  - id: docker_restart_warning
+    type: container_warning
+    weight: 2
+    enabled: true
+    flow: [docker-daemon, kubelet]
+    log_level: [WARN]
+    ai_reasoning: true
+    correlated_logs:
+      - docker-daemon: "Container payment-service exited unexpectedly. Exit Code 137"
+      - kubelet: "Restarting payment-service pod due to unexpected termination"
+
+  - id: container_crash_loop
+    type: infra_error
+    weight: 1
+    enabled: true
+    flow: [docker-daemon, container-runtime]
+    log_level: [ERROR]
+    ai_reasoning: true
+    correlated_logs:
+      - docker-daemon: "Container [kyc-service] exited with code 137 (OOMKilled)"
+      - container-runtime: "Restarting container [kyc-service] (crash loop detected)"
 
   - id: ddos_attack
     type: security_warning
@@ -121,11 +198,12 @@ scenarios:
     type: network_warning
     weight: 0.4
     enabled: true
-    flow: [service-router, upi-router]
+    flow: [service-router, metrics-server, upi-router]
     log_level: [WARN]
     ai_reasoning: true
     correlated_logs:
       - service-router: "Latency of {latency_ms}ms observed to PSP endpoint {ip_address}"
+      - metrics-server: "CPU usage on pod {pod_old} exceeded 75%"
       - upi-router: "Retrying connection to {ip_address}"
 
   - id: packet_loss
@@ -138,3 +216,31 @@ scenarios:
     correlated_logs:
       - service-router: "Packet loss detected to {ip_address} - retries exhausted"
       - upi-router: "Downstream unresponsive - tripping circuit breaker"
+
+  - id: rdbms-cluster-healthy
+    weight: 2
+    correlated_logs:
+      - rdbms-cluster: "Primary DB node postgres-1 up and healthy"
+      - rdbms-cluster: "All 3 replicas are in sync with primary (replication lag < 100ms)"
+      - rdbms-monitor: "Query throughput steady at {qps} QPS across cluster"
+
+  - id: rdbms-cluster-fatigue
+    weight: 1
+    correlated_logs:
+      - rdbms-cluster: "Replica postgres-{replica_id} lag at {replica_lag}ms (threshold: 1000ms)"
+      - rdbms-storage: "Write I/O bottleneck detected on primary (disk latency: {disk_latency}ms) [E_RDB_IO_SLOW]"
+      - rdbms-monitor: "Spike in long-running queries on node postgres-{replica_id}"
+
+  - id: nosql-cluster-healthy
+    weight: 2
+    correlated_logs:
+      - nosql-cluster: "Primary node mongo-0 healthy. Replication set active."
+      - nosql-cluster: "All shards balanced across 3 nodes"
+      - nosql-monitor: "In-memory cache hit ratio: {cache_hit_ratio}%"
+
+  - id: nosql-cluster-fatigue
+    weight: 1
+    correlated_logs:
+      - nosql-cluster: "Replica set member mongo-{replica_id} syncing slow (replication lag: {replica_lag}ms)"
+      - nosql-monitor: "Write throughput dropped below threshold on shard-{shard_id} [E_NOSQL_WRITE_LAG]"
+      - nosql-cluster: "Auto-resync triggered for node mongo-{resync_node}"
