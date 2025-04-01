@@ -106,6 +106,10 @@ def get_random_disk_latency():
     return random.randint(200, 1000)
 
 
+def get_random_product_id():
+    return random.randint(100000000,999999999)
+
+
 def get_random_replica_id():
     return random.choice(["1", "2", "3"])
 

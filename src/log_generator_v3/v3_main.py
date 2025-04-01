@@ -62,3 +62,56 @@ while True:
     for log in combined_logs:
         log_writer.write(log)
         # time.sleep(random.uniform(0.1, 0.2))  # optional: jitter
+
+# Sample config loaded as Python dict
+# workflow = {
+#     "http_logs": {
+#         "ecommerce_cart_checkout": {
+#             "endpoint": "/cart/checkout",
+#             "api_logs": [
+#                 {"INFO": ["api-gateway", "product-service", "cart-service", "order-service"]}
+#             ],
+#             "infra_logs": [
+#                 {"INFO": ["metrics-server", "rdbms-cluster", "rdbms-storage", "kubelet", "hpa-controller"]}
+#             ]
+#         },
+#         "ecommerce_payment": {
+#             "endpoint": "/payment/confirm",
+#             "api_logs": [
+#                 {"INFO": ["api-gateway", "order-service", "payment-gateway", "transaction-engine"]}
+#             ],
+#             "infra_logs": [
+#                 {"INFO": ["metrics-server", "rdbms-cluster", "nosql", "docker-daemon", "rdbms-monitor"]}
+#             ]
+#         }
+#     }
+# }
+#
+# def iterate_loop(services, position):
+#     # === FORWARD PRINT ===
+#     print(">>>>>>>>>>>>>>>> Forward Order: <<<<<<<<<<<<<<<<")
+#
+#     seq = 0
+#     for index, service in enumerate(services):
+#         print(service)
+#         seq = index
+#         if (position == seq):
+#             break
+#
+#     # === REVERSE PRINT (Java-style index loop) ===
+#     print("\n>>>>>>>>>>>>>>>> Reverse Order: <<<<<<<<<<<<<<<<")
+#     for i in range(seq - 1, -1, -1):
+#         print(services[i])
+#
+# if __name__ == "__main__":
+#
+#     # Select one flow to demo
+#     flows = ["ecommerce_cart_checkout", "ecommerce_payment"]
+#     for flow in flows:
+#         flow_name = flow
+#         api_log_entry = workflow["http_logs"][flow_name]["api_logs"][0]
+#         infra_log_entry = workflow["http_logs"][flow_name]["infra_logs"][0]
+#         services = api_log_entry["INFO"]
+#         services.extend(infra_log_entry["INFO"])
+#         iterate_loop(services, 3)
+#

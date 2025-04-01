@@ -88,30 +88,37 @@ reverse-templates:
   api-gateway:
     - INFO: "Response sent to client from {ip_address} for {api_endpoint} successfully. | user-agent=Mozilla/5.0"
     - WARN: "Response sent to client from {ip_address} for {api_endpoint}. Observed latency of {latency} ms | user-agent=Mozilla/5.0"
+    - ERROR: "Error response for Request to {api_endpoint} from {ip_address} due to {error_message} | user-agent=Mozilla/5.0"
 
   product-service:
     - INFO: "Product {product_id} details delivered to upstream service."
     - WARN: "Product {product_id} data delayed by {latency} ms before response."
+    - ERROR: "Product service failed to fetch item {product_id} due to {error_message}"
 
   cart-service:
     - INFO: "Cart updated for user {user_id} with item {product_id}. Confirmation sent."
     - WARN: "Cart update for user {user_id} experienced delay of {latency} ms before confirmation."
+    - ERROR: "Failed to update cart for user {user_id} for item {product_id} due to {error_message}"
 
   order-service:
     - INFO: "Order confirmation for user {user_id} (Order ID: {order_id}) sent to upstream service."
     - WARN: "Order confirmation for user {user_id} was delayed by {latency} ms."
+    - ERROR: "Order processing failed for user {user_id} - {error_message}"
 
   payment-gateway:
     - INFO: "Payment confirmation of {amount} for user {user_id} sent successfully."
     - WARN: "Payment confirmation for user {user_id} delayed by {latency} ms due to processing overhead."
+    - ERROR: "Payment failure for user {user_id}, amount: {amount} - Reason: {error_message}"
 
   delivery-service:
     - INFO: "Shipment confirmation for order {order_id} sent to client."
     - WARN: "Delivery update for order {order_id} delayed due to route congestion on {route_id}."
+    - ERROR: "Delivery failed for order {order_id} due to {error_message}"
 
   review-service:
     - INFO: "Review for product {product_id} acknowledged and logged for user {user_id}."
     - WARN: "Review acknowledgment for product {product_id} delayed by {latency} ms."
+    - ERROR: "Review service unavailable for product {product_id}"
 
 workflow:
   http_logs:
